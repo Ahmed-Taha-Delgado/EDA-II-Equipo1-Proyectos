@@ -1,3 +1,9 @@
+import java.util.*;
+
+import javax.annotation.processing.FilerException;
+
+import java.io.*;
+
 
 public class Ordenamientos {
     
@@ -135,7 +141,7 @@ public class Ordenamientos {
         }
     }
 
-    static void merge(int arreglo[], int izq, int mid, int der, int[] operaciones){
+    public static void merge(int arreglo[], int izq, int mid, int der, int[] operaciones){
         int n1 = mid - izq + 1;
         int n2 = der - mid;
 
@@ -176,7 +182,7 @@ public class Ordenamientos {
         }
     }
 
-    static void mergeSort(int arreglo[], int izq, int der, int[] operaciones){
+    public static void mergeSort(int arreglo[], int izq, int der, int[] operaciones){
         if(izq < der){
             operaciones[6]++;
             int mid = (izq + der) / 2;
@@ -185,6 +191,79 @@ public class Ordenamientos {
             merge(arreglo, izq, mid, der, operaciones);
         }
     }
+    
+    public static void countingSort(int[] arreglo, int[] operaciones){
 
+        int maximo = Arrays.stream(arreglo).max().getAsInt();
+        int minimo = Arrays.stream(arreglo).min().getAsInt();
+        int rango = maximo - minimo + 1;
+
+        int[] arregloAuxiliar = new int[rango];
+		int[] arregloOrdenado = new int[arreglo.length];
+
+		//arreglo de la cuenta
+		for(int i=0;i<arregloAuxiliar.length;i++){
+			arregloAuxiliar[i]=0;
+            operaciones[7]++;
+		}
+
+		for(int i=0;i<arreglo.length;i++){
+			arregloAuxiliar[arreglo[i] - minimo]++;
+            operaciones[7]++;
+		}
+
+		//suma
+		for(int i=1;i<arregloAuxiliar.length;i++){
+			arregloAuxiliar[i]+=arregloAuxiliar[i-1];
+            operaciones[7]++;
+		}	
+
+		//arreglo ordenado
+		for(int i=arreglo.length-1;i>=0;i--){
+			int valor2 = arreglo[i];
+            arregloOrdenado[arregloAuxiliar[valor2 - minimo]-1] = valor2;
+            arregloAuxiliar[valor2 - minimo]--;
+            operaciones[7]++;
+		}
+
+    }
+
+    public static void radixSort(int[] arreglo, int[] operaciones){
+
+        LinkedList<Queue<Integer>> miListaDeColas = new LinkedList<>();
+
+        int maximo = Arrays.stream(arreglo).max().getAsInt();
+        int digitos = String.valueOf(maximo).length();
+
+		for(int i=0; i<10; i++){
+			Queue<Integer> miCola = new LinkedList<>();
+			miListaDeColas.add(miCola);
+		}
+		int posicion = 1;
+		for(int i=0; i<digitos; i++){
+				
+			for(int j=0; j<arreglo.length; j++){
+				int cola = (arreglo[j]/posicion)%10;
+				miListaDeColas.get(cola).add(arreglo[j]);
+                operaciones[8]++;
+			}
+			posicion = posicion * 10;
+			
+			int aux = 0;
+			for(int k=0; k<miListaDeColas.size(); k++){
+				while(!miListaDeColas.get(k).isEmpty()){
+					arreglo[aux] = miListaDeColas.get(k).poll(); 
+					aux++;
+                    operaciones[8]++;
+				}
+			}
+		}
+        
+    }
+
+
+    public static void polifase(File f0, int n, int tamaño) throws IOException{
+
+    }
 
 }

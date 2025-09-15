@@ -20,9 +20,8 @@ public class Utilerias {
 
         Random aleatorio = new Random();
 
-        for(int i=0;i<numero;i++){
-            int valor = aleatorio.nextInt(1000);
-            arreglo[i]=valor;
+        for (int i=0;i<numero;i++) {
+            arreglo[i] = aleatorio.nextInt(1000) + 1;
         }
 
     }
@@ -36,5 +35,4 @@ public class Utilerias {
 
     }
 
-    
 }

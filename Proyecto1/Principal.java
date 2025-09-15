@@ -1,50 +1,41 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Principal{
 
     public static void main(String[] args) {
         
         int[] elementos = {50, 100, 500, 800, 1000, 2000, 5000, 10000};
         int[] operaciones = new int[10];
+        ArrayList<int[]> miListaDeArreglos = new ArrayList<>();
+        for (int k = 0; k < 10; k++) {
+            miListaDeArreglos.add(new int[0]);
+        }
 
         System.out.println("Se llenara 8 veces una lista usando tamaños predefinidos de numeros aleatorios");
         
-        for(int j=0; j<8; j++){    
+        for(int j=0; j<8; j++){   
+            
+            int numero = elementos[j];
             
             for(int i=0; i<5; i++){
 
-                int numero = elementos[j];
-                int[] copia1 = new int[numero];
-                int[] copia2 = new int[numero]; 
-                int[] copia3 = new int[numero]; 
-                int[] copia4 = new int[numero]; 
-                int[] copia5 = new int[numero]; 
-                int[] copia6 = new int[numero]; 
-                int[] copia7 = new int[numero]; 
-                int[] copia8 = new int[numero]; 
-                int[] copia9 = new int[numero];
                 int[] arreglo = new int[numero];
                 Utilerias.crearArregloAleatorio(arreglo, numero);
-                Utilerias.imprimirArreglo(arreglo);
-
-                for(int k=0; k<numero; k++){
-                    copia1[k]=arreglo[k];
-                    copia2[k]=arreglo[k];
-                    copia3[k]=arreglo[k];
-                    copia4[k]=arreglo[k];
-                    copia5[k]=arreglo[k];
-                    copia6[k]=arreglo[k];
-                    copia7[k]=arreglo[k];
-                    copia8[k]=arreglo[k];
-                    copia9[k]=arreglo[k];
+                miListaDeArreglos.set(0,arreglo);
+                for(int k=1; k<10; k++){
+                    miListaDeArreglos.set(k,Arrays.copyOf(arreglo, arreglo.length));
                 }
 
-                Ordenamientos.insertionSort(copia1, operaciones);
-                Ordenamientos.selectionSort(copia2, operaciones);
-                Ordenamientos.bubbleSort(copia3, operaciones);
-                Ordenamientos.bubbleSortMejorado(copia4, operaciones);
-                Ordenamientos.heapSort(copia5, operaciones);
-                Ordenamientos.quickSort(copia6,0,numero-1, operaciones);
-                Ordenamientos.mergeSort(copia7,0,numero-1, operaciones);
-                //Ordenamientos.bubbleSort(copia3, operaciones);
+                Ordenamientos.insertionSort(miListaDeArreglos.get(0), operaciones);
+                Ordenamientos.selectionSort(miListaDeArreglos.get(1), operaciones);
+                Ordenamientos.bubbleSort(miListaDeArreglos.get(2), operaciones);
+                Ordenamientos.bubbleSortMejorado(miListaDeArreglos.get(3), operaciones);
+                Ordenamientos.heapSort(miListaDeArreglos.get(4), operaciones);
+                Ordenamientos.quickSort(miListaDeArreglos.get(5),0,numero-1, operaciones);
+                Ordenamientos.mergeSort(miListaDeArreglos.get(6),0,numero-1, operaciones);
+                Ordenamientos.countingSort(miListaDeArreglos.get(7), operaciones);
+                Ordenamientos.radixSort(miListaDeArreglos.get(8), operaciones);
 
 
 
