@@ -1,10 +1,5 @@
 import java.util.*;
 
-import javax.annotation.processing.FilerException;
-
-import java.io.*;
-
-
 public class Ordenamientos {
     
     public static void insertionSort(int[] arreglo, int[] operaciones){
@@ -261,9 +256,6 @@ public class Ordenamientos {
         
     }
 
-
-    public static void polifase(File f0, int n, int tamaño) throws IOException{
-
-    }
+    //public static void polifase(File f0, int n, int tamaño) throws IOException{}
 
 }
