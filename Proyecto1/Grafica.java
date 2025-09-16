@@ -184,7 +184,7 @@ public class Grafica extends JFrame {
                 // Dibujar líneas y puntos
                 for(int k=0; k<tamaño; k++){
                     int[] datos = valores.get(k);
-                    g2.setColor(colores[k % colores.length]);
+                    g2.setColor(Color.BLACK);
 
                     int prevX = margin;
                     int prevY = height - margin - (int)Math.round((double)datos[0]/max * (height-2*margin));

@@ -8,6 +8,7 @@ public class Ordenamientos {
             int indice = arreglo[i];
             int j = i;
             while(j>0 && arreglo[j-1]>indice){
+                operaciones[0]++;
                 arreglo[j] = arreglo[j-1];
                 j--;
                 operaciones[0]++;
@@ -23,6 +24,7 @@ public class Ordenamientos {
         for(int i=0; i<arreglo.length; i++){
             int indiceMenor = i;
             for(int j=i+1; j<arreglo.length; j++){
+                operaciones[1]++;
                 if(arreglo[j]<arreglo[indiceMenor]){
                     indiceMenor = j;
                 }
@@ -42,6 +44,7 @@ public class Ordenamientos {
 
         for(int i=arreglo.length-1; i>0; i--){
             for(int j=0; j<i; j++){
+                operaciones[2]++;
                 if(arreglo[j]>arreglo[j+1]){
                     Utilerias.intercambiar(arreglo, j, j+1);
                     operaciones[2]++;
@@ -55,6 +58,7 @@ public class Ordenamientos {
         for(int i=arreglo.length-1; i>0; i--){
             int actualizacion=0;
             for(int j=0; j<i; j++){
+                operaciones[3]++;
                 if(arreglo[j]>arreglo[j+1]){
                     Utilerias.intercambiar(arreglo, j, j+1);
                     actualizacion=1;
@@ -82,16 +86,20 @@ public class Ordenamientos {
 
     public static void heapify(int[] arreglo, int i, int heapSize, int[] operaciones){
 
-        operaciones[4]++;
         int l = 2 * i + 1;
         int r = 2 * i + 2;
         int largest;
-        if(l<=heapSize && arreglo[l]>arreglo[i])
+        if(l<=heapSize && arreglo[l]>arreglo[i]){
             largest = l;
-        else
+            operaciones[4]++;
+        }else{
             largest = i;
-        if(r<=heapSize && arreglo[r]>arreglo[largest])
+            operaciones[4]++;
+        }
+        if(r<=heapSize && arreglo[r]>arreglo[largest]){
             largest = r;
+            operaciones[4]++;
+        }
         if(largest!=i){
             Utilerias.intercambiar(arreglo, i, largest);
             operaciones[4]++;
@@ -115,6 +123,7 @@ public class Ordenamientos {
         int pivote = arreglo[fin];
         int i = inicio - 1;
         for(int j=inicio; j<=fin-1; j++){
+            operaciones[5]++;
             if(arreglo[j]<=pivote){
                 i++;
                 Utilerias.intercambiar(arreglo, i, j);
@@ -144,21 +153,27 @@ public class Ordenamientos {
         int L[] = new int[n1];
         int R[] = new int[n2];
 
-        for(int i=0; i<n1; ++i)
+        for(int i=0; i<n1; ++i){
             L[i] = arreglo[izq + i];
-        for (int j=0; j<n2; ++j)
+            operaciones[6]++;
+        }
+        for (int j=0; j<n2; ++j){
             R[j] = arreglo[mid + 1 + j];
+            operaciones[6]++;
+        }
 
         int i = 0, j = 0;
         int k = izq;
         while(i<n1 && j<n2){
-            operaciones[6]++;
+            
             if (L[i] <= R[j]) {
                 arreglo[k] = L[i];
                 i++;
+                operaciones[6]++;
             } else {
                 arreglo[k] = R[j];
                 j++;
+                operaciones[6]++;
             }
             k++;
         }
@@ -205,13 +220,13 @@ public class Ordenamientos {
 
 		for(int i=0;i<arreglo.length;i++){
 			arregloAuxiliar[arreglo[i] - minimo]++;
-            operaciones[7]++;
+            operaciones[7] += 2;
 		}
 
 		//suma
 		for(int i=1;i<arregloAuxiliar.length;i++){
 			arregloAuxiliar[i]+=arregloAuxiliar[i-1];
-            operaciones[7]++;
+            operaciones[7] += 2;
 		}	
 
 		//arreglo ordenado
@@ -219,7 +234,7 @@ public class Ordenamientos {
 			int valor2 = arreglo[i];
             arregloOrdenado[arregloAuxiliar[valor2 - minimo]-1] = valor2;
             arregloAuxiliar[valor2 - minimo]--;
-            operaciones[7]++;
+            operaciones[7] += 3;
 		}
 
     }
@@ -241,7 +256,7 @@ public class Ordenamientos {
 			for(int j=0; j<arreglo.length; j++){
 				int cola = (arreglo[j]/posicion)%10;
 				miListaDeColas.get(cola).add(arreglo[j]);
-                operaciones[8]++;
+                operaciones[8] += 2;
 			}
 			posicion = posicion * 10;
 			
@@ -250,13 +265,54 @@ public class Ordenamientos {
 				while(!miListaDeColas.get(k).isEmpty()){
 					arreglo[aux] = miListaDeColas.get(k).poll(); 
 					aux++;
-                    operaciones[8]++;
+                    operaciones[8] += 2;
 				}
 			}
 		}
         
     }
 
-    //public static void polifase(File f0, int n, int tamaño) throws IOException{}
+    public static void mezclaDirecta(int[] arreglo, int n, int[] operaciones){
+    
+
+    }
+
+    public static void polifase(Queue<Integer> f0, int n, int[] operaciones){
+
+        Queue<int[]> f1 = new LinkedList<>();
+        Queue<int[]> f2 = new LinkedList<>();
+        Queue<int[]> f3 = new LinkedList<>();
+
+        int[] aux = new int[n];
+        
+            while(f0.size()!=0){
+                for(int i=0; i<n; i++){
+                    aux[i] = f0.poll();
+                }
+                f1.add(aux);
+
+                for(int i=0; i<n; i++){
+                    aux[i] = f0.poll();
+                }
+                f2.add(aux);
+            }
+
+            n *= 2;
+            /*
+            int[] aux2 = new int[n];
+
+            while(f1.size()!=0 || f2.size()!=0){
+
+                aux = f1.poll()
+                for(int i=0; i<f1.peek().length; i++){
+                    
+                }
+
+            }
+            
+            */
+
+
+    }
 
 }
