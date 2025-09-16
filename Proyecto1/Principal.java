@@ -56,6 +56,7 @@ public class Principal{
         }
 
         Grafica verGraficas = new Grafica(elementos, miListaDeOperaciones);
+        verGraficas.setVisible(true);
 
     }
 

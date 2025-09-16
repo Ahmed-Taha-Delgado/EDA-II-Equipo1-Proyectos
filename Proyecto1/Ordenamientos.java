@@ -23,12 +23,12 @@ public class Ordenamientos {
         for(int i=0; i<arreglo.length; i++){
             int indiceMenor = i;
             for(int j=i+1; j<arreglo.length; j++){
-                operaciones[1]++;
                 if(arreglo[j]<arreglo[indiceMenor]){
                     indiceMenor = j;
                 }
                 if(i!=indiceMenor){
                     Utilerias.intercambiar(arreglo, i, indiceMenor);
+                    operaciones[1]++;
                     
                     
                 }
@@ -94,6 +94,7 @@ public class Ordenamientos {
             largest = r;
         if(largest!=i){
             Utilerias.intercambiar(arreglo, i, largest);
+            operaciones[4]++;
             heapify(arreglo, largest, heapSize, operaciones);
         }
             
