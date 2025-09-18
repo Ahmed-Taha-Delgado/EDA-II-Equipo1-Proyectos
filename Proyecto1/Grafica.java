@@ -164,8 +164,12 @@ public class Grafica extends JFrame {
                     g2.drawLine(margin, y, width - margin, y);
                     int yValue = (int)Math.round((double)max*i/steps); // redondeo
                     g2.setColor(Color.BLACK);
-                    g2.drawString(String.valueOf(yValue), margin - 40, y + 5);
+                    g2.drawString(String.valueOf(yValue), margin - 60, y + 5);
                     g2.setColor(Color.LIGHT_GRAY);
+                }
+                for(int i=0; i<elementos.length; i++){
+                    int x = margin + i*(width-2*margin)/(elementos.length-1);
+                    g2.drawLine(x, height-margin, x, margin);
                 }
 
                 // Dibujar ejes
@@ -184,7 +188,7 @@ public class Grafica extends JFrame {
                 // Dibujar líneas y puntos
                 for(int k=0; k<tamaño; k++){
                     int[] datos = valores.get(k);
-                    g2.setColor(Color.BLACK);
+                    g2.setColor(colores[k % colores.length]);
 
                     int prevX = margin;
                     int prevY = height - margin - (int)Math.round((double)datos[0]/max * (height-2*margin));
@@ -201,6 +205,7 @@ public class Grafica extends JFrame {
                     }
                 }
 
+                g2.setColor(Color.BLACK);
                 // Etiquetas eje X
                 for(int i=0; i<elementos.length; i++){
                     int x = margin + i*(width-2*margin)/(elementos.length-1);
@@ -208,6 +213,7 @@ public class Grafica extends JFrame {
                 }
 
                 // Títulos ejes
+
                 g2.drawString("Numero de elementos", width/2 - 50, height - 20);
                 g2.drawString("Numero de operaciones", 20, margin - 10);
             }
@@ -217,8 +223,6 @@ public class Grafica extends JFrame {
         ventana.setVisible(true);
 
     }
-
-    
 
 
 

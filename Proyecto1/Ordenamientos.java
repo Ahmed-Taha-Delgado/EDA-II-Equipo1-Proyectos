@@ -272,11 +272,6 @@ public class Ordenamientos {
         
     }
 
-    public static void mezclaDirecta(int[] arreglo, int n, int[] operaciones){
-    
-
-    }
-
     public static void polifase(Queue<int[]> f0, int n, int[] operaciones){
 
         Queue<int[]> f1 = new LinkedList<>();
@@ -384,6 +379,12 @@ public class Ordenamientos {
         
         //System.out.println(Arrays.toString(f0.peek()));
             
+    }
+
+    public static void mezclaDirecta(int[] arreglo, int n, int[] operaciones){
+    
+        
+
     }
 
 }
