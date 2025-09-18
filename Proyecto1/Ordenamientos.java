@@ -40,29 +40,16 @@ public class Ordenamientos {
 
     }
 
-    public static void bubbleSort(int[] arreglo, int[] operaciones){
-
-        for(int i=arreglo.length-1; i>0; i--){
-            for(int j=0; j<i; j++){
-                operaciones[2]++;
-                if(arreglo[j]>arreglo[j+1]){
-                    Utilerias.intercambiar(arreglo, j, j+1);
-                    operaciones[2]++;
-                }
-            }
-        }
-    }
-
     public static void bubbleSortMejorado(int[] arreglo, int[] operaciones){
 
         for(int i=arreglo.length-1; i>0; i--){
             int actualizacion=0;
             for(int j=0; j<i; j++){
-                operaciones[3]++;
+                operaciones[2]++;
                 if(arreglo[j]>arreglo[j+1]){
                     Utilerias.intercambiar(arreglo, j, j+1);
                     actualizacion=1;
-                    operaciones[3]++;
+                    operaciones[2]++;
                 }
             }
             if(actualizacion==0){
@@ -71,13 +58,31 @@ public class Ordenamientos {
         }
     }
 
+    public static void gnomeSort(int arreglo[], int[] operaciones) {
+        int index = 0;
+
+        while (index < arreglo.length) {
+            if (index == 0)
+                index++;
+            if (arreglo[index] >= arreglo[index - 1])
+                index++;
+            else {
+                Utilerias.intercambiar(arreglo, index, index-1);
+                index--;
+            }
+            operaciones[3]++;
+        }
+    }
+
+    //relaxion
+
     public static void heapSort(int[] arreglo, int[] operaciones){
 
         int heapSize = buildHeap(arreglo, operaciones);
         for(int i=arreglo.length-1; i>0; i--){
             Utilerias.intercambiar(arreglo, 0, heapSize);
             heapSize--;
-            operaciones[4]++;
+            operaciones[5]++;
             heapify(arreglo,0,heapSize, operaciones);
         }
         
@@ -91,18 +96,18 @@ public class Ordenamientos {
         int largest;
         if(l<=heapSize && arreglo[l]>arreglo[i]){
             largest = l;
-            operaciones[4]++;
+            operaciones[5]++;
         }else{
             largest = i;
-            operaciones[4]++;
+            operaciones[5]++;
         }
         if(r<=heapSize && arreglo[r]>arreglo[largest]){
             largest = r;
-            operaciones[4]++;
+            operaciones[5]++;
         }
         if(largest!=i){
             Utilerias.intercambiar(arreglo, i, largest);
-            operaciones[4]++;
+            operaciones[5]++;
             heapify(arreglo, largest, heapSize, operaciones);
         }
             
@@ -112,7 +117,7 @@ public class Ordenamientos {
 
         int heapSize = arreglo.length - 1;
         for(int i=(arreglo.length-1)/2; i>=0; i--){
-            operaciones[4]++;
+            operaciones[5]++;
             heapify(arreglo, i, heapSize, operaciones);
         }
         return heapSize;
@@ -123,15 +128,15 @@ public class Ordenamientos {
         int pivote = arreglo[fin];
         int i = inicio - 1;
         for(int j=inicio; j<=fin-1; j++){
-            operaciones[5]++;
+            operaciones[6]++;
             if(arreglo[j]<=pivote){
                 i++;
                 Utilerias.intercambiar(arreglo, i, j);
-                operaciones[5]++;
+                operaciones[6]++;
             }       
         }
         Utilerias.intercambiar(arreglo, i+1, fin);
-        operaciones[5]++;
+        operaciones[6]++;
         return (i+1);
 
     }
@@ -139,7 +144,7 @@ public class Ordenamientos {
     public static void quickSort(int[] arreglo, int inicio, int fin, int[] operaciones){
 
         if(inicio<fin){
-            operaciones[5]++;
+            operaciones[6]++;
             int pivote = partition(arreglo, inicio, fin,operaciones);
             quickSort(arreglo, inicio, pivote-1, operaciones);
             quickSort(arreglo, pivote+1, fin, operaciones);
@@ -155,11 +160,11 @@ public class Ordenamientos {
 
         for(int i=0; i<n1; ++i){
             L[i] = arreglo[izq + i];
-            operaciones[6]++;
+            operaciones[7]++;
         }
         for (int j=0; j<n2; ++j){
             R[j] = arreglo[mid + 1 + j];
-            operaciones[6]++;
+            operaciones[7]++;
         }
 
         int i = 0, j = 0;
@@ -169,24 +174,24 @@ public class Ordenamientos {
             if (L[i] <= R[j]) {
                 arreglo[k] = L[i];
                 i++;
-                operaciones[6]++;
+                operaciones[7]++;
             } else {
                 arreglo[k] = R[j];
                 j++;
-                operaciones[6]++;
+                operaciones[7]++;
             }
             k++;
         }
 
         while(i<n1){
-            operaciones[6]++;
+            operaciones[7]++;
             arreglo[k] = L[i];
             i++;
             k++;
         }
 
         while(j<n2){
-            operaciones[6]++;
+            operaciones[7]++;
             arreglo[k] = R[j];
             j++;
             k++;
@@ -195,7 +200,7 @@ public class Ordenamientos {
 
     public static void mergeSort(int arreglo[], int izq, int der, int[] operaciones){
         if(izq < der){
-            operaciones[6]++;
+            operaciones[7]++;
             int mid = (izq + der) / 2;
             mergeSort(arreglo, izq, mid, operaciones);
             mergeSort(arreglo, mid + 1, der, operaciones);
@@ -215,18 +220,18 @@ public class Ordenamientos {
 		//arreglo de la cuenta
 		for(int i=0;i<arregloAuxiliar.length;i++){
 			arregloAuxiliar[i]=0;
-            operaciones[7]++;
+            operaciones[8]++;
 		}
 
 		for(int i=0;i<arreglo.length;i++){
 			arregloAuxiliar[arreglo[i] - minimo]++;
-            operaciones[7] += 2;
+            operaciones[8] += 2;
 		}
 
 		//suma
 		for(int i=1;i<arregloAuxiliar.length;i++){
 			arregloAuxiliar[i]+=arregloAuxiliar[i-1];
-            operaciones[7] += 2;
+            operaciones[8] += 2;
 		}	
 
 		//arreglo ordenado
@@ -234,7 +239,7 @@ public class Ordenamientos {
 			int valor2 = arreglo[i];
             arregloOrdenado[arregloAuxiliar[valor2 - minimo]-1] = valor2;
             arregloAuxiliar[valor2 - minimo]--;
-            operaciones[7] += 3;
+            operaciones[8] += 3;
 		}
 
     }
@@ -256,7 +261,7 @@ public class Ordenamientos {
 			for(int j=0; j<arreglo.length; j++){
 				int cola = (arreglo[j]/posicion)%10;
 				miListaDeColas.get(cola).add(arreglo[j]);
-                operaciones[8] += 2;
+                operaciones[9] += 2;
 			}
 			posicion = posicion * 10;
 			
@@ -265,11 +270,16 @@ public class Ordenamientos {
 				while(!miListaDeColas.get(k).isEmpty()){
 					arreglo[aux] = miListaDeColas.get(k).poll(); 
 					aux++;
-                    operaciones[8] += 2;
+                    operaciones[9] += 2;
 				}
 			}
 		}
         
+    }
+
+    public static void mezclaDirecta(int[] arreglo, int n, int[] operaciones){
+    
+
     }
 
     public static void polifase(Queue<int[]> f0, int n, int[] operaciones){
@@ -288,7 +298,7 @@ public class Ordenamientos {
 
             for(int i=0; i<tamaño; i++){
                 aux[i] = bloque[inicio + i];
-                operaciones[9]++;
+                operaciones[10]++;
             }
             
             if((inicio/n)%2==0){
@@ -317,11 +327,11 @@ public class Ordenamientos {
 
                 for(int i=0; i<aux1.length; i++){
                     aux3[i] = aux1[i];
-                    operaciones[9]++;
+                    operaciones[10]++;
                 }
                 for(int i=0; i<aux2.length; i++){
                     aux3[i+aux1.length] = aux2[i];
-                    operaciones[9]++;
+                    operaciones[10]++;
                 }
                 MergeExterno.mergeSort(aux3,0,aux3.length-1);
                 
@@ -346,11 +356,11 @@ public class Ordenamientos {
 
                 for(int i=0; i<aux1.length; i++){
                     aux3[i] = aux1[i];
-                    operaciones[9]++;
+                    operaciones[10]++;
                 }
                 for(int i=0; i<aux2.length; i++){
                     aux3[i+aux1.length] = aux2[i];
-                    operaciones[9]++;
+                    operaciones[10]++;
                 }
                 MergeExterno.mergeSort(aux3,0,aux3.length-1);
                 
@@ -380,11 +390,5 @@ public class Ordenamientos {
         //System.out.println(Arrays.toString(f0.peek()));
             
     }
-
-    public static void mezclaDirecta(int[] arreglo, int n, int[] operaciones){
-    
-        
-
-    }
-
 }
+

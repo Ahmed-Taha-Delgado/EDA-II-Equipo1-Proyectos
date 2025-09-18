@@ -12,7 +12,7 @@ public class Grafica extends JFrame {
     public Grafica(int[] elementos, ArrayList<int[]> operaciones){
 
         ArrayList<int[]> valores = new ArrayList<>();
-        for(int i=0; i<4; i++){
+        for(int i=0; i<5; i++){
             valores.add(new int[8]);
         }
         ArrayList<String> nombres = new ArrayList<>(Arrays.asList("", "", "", ""));
@@ -38,8 +38,8 @@ public class Grafica extends JFrame {
                 
                 nombres.set(0, "InsertionSort");
                 nombres.set(1, "SelectionSort");
-                nombres.set(2, "BubbleSort");
-                nombres.set(3, "BubbleSort Mejorado");
+                nombres.set(2, "BubbleSort Mejorado");
+                nombres.set(3, "GnomeSort");
 
                 for(int j=0; j<4; j++){    
                     for(int i=0; i<8; i++){
@@ -101,7 +101,7 @@ public class Grafica extends JFrame {
         add(botonRaritos);
         add(Box.createVerticalStrut(10));
 
-        botonExternos = new JButton("Graficas algoritmos Externos");
+        botonExternos = new JButton("Graficas algoritmos Externos y Extras");
         botonExternos.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -224,8 +224,8 @@ public class Grafica extends JFrame {
 
     }
 
+        ventana.add(panel);
+        ventana.setVisible(true);
 
-
-
-    
+    }
 }

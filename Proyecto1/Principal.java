@@ -10,7 +10,7 @@ public class Principal{
         int[] elementos = {50, 100, 500, 800, 1000, 2000, 5000, 10000};
         ArrayList<int[]> miListaDeOperaciones = new ArrayList<>();
         for(int i=0; i<8; i++){
-            miListaDeOperaciones.add(new int[12]);
+            miListaDeOperaciones.add(new int[13]);
         }
         Queue<int[]> miCola = new LinkedList<>();
 
@@ -32,11 +32,11 @@ public class Principal{
                 }
                 miCola.add(arreglo);
 
-                int[] operaciones = new int[12];
+                int[] operaciones = new int[13];
                 Ordenamientos.insertionSort(miListaDeArreglos.get(0), operaciones);
                 Ordenamientos.selectionSort(miListaDeArreglos.get(1), operaciones);
-                Ordenamientos.bubbleSort(miListaDeArreglos.get(2), operaciones);
-                Ordenamientos.bubbleSortMejorado(miListaDeArreglos.get(3),operaciones);
+                Ordenamientos.bubbleSortMejorado(miListaDeArreglos.get(2),operaciones);
+                Ordenamientos.gnomeSort(miListaDeArreglos.get(3), operaciones);
                 Ordenamientos.heapSort(miListaDeArreglos.get(4), operaciones);
                 Ordenamientos.quickSort(miListaDeArreglos.get(5),0,numero-1, operaciones);
                 Ordenamientos.mergeSort(miListaDeArreglos.get(6),0,numero-1, operaciones);
@@ -45,12 +45,12 @@ public class Principal{
                 Ordenamientos.polifase(miCola, numero/25, operaciones);
 
                 int[] operacionesAux = miListaDeOperaciones.get(j);
-                for(int k=0; k<12; k++){
+                for(int k=0; k<13; k++){
                     operacionesAux[k] += operaciones[k];
                 }
             }
             int[] operacionesAux = miListaDeOperaciones.get(j);
-            for(int k=0; k<12; k++){
+            for(int k=0; k<13; k++){
                 operacionesAux[k] /= 5;
             }
         }
