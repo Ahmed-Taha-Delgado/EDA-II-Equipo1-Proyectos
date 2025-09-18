@@ -64,7 +64,8 @@ public class Grafica extends JFrame {
                 nombres.set(0, "QuickSort");
                 nombres.set(1, "HeapSort");
                 nombres.set(2, "MergeSort");
-                for(int j=0; j<3; j++){    
+                nombres.set(3, "RelaxionSort");
+                for(int j=0; j<4; j++){    
                     for(int i=0; i<8; i++){
                         valores.get(j)[i] = operaciones.get(i)[j+4];
                     }
@@ -72,7 +73,7 @@ public class Grafica extends JFrame {
                 for (int[] arr : valores) {
                     System.out.println(Arrays.toString(arr));
                 }   
-                Graf(elementos, nombres, valores, 3);
+                Graf(elementos, nombres, valores, 4);
             }
         });
         botonEficientes.setAlignmentX(CENTER_ALIGNMENT);
@@ -88,7 +89,7 @@ public class Grafica extends JFrame {
                 nombres.set(1, "RadixSort");
                 for(int j=0; j<2; j++){    
                     for(int i=0; i<8; i++){
-                        valores.get(j)[i] = operaciones.get(i)[j+7];
+                        valores.get(j)[i] = operaciones.get(i)[j+8];
                     }
                 }
                 for (int[] arr : valores) {
@@ -111,7 +112,7 @@ public class Grafica extends JFrame {
                 nombres.set(2, "Mezcla Equilibrada");
                 for(int j=0; j<3; j++){    
                     for(int i=0; i<8; i++){
-                        valores.get(j)[i] = operaciones.get(i)[j+9];
+                        valores.get(j)[i] = operaciones.get(i)[j+10];
                     }
                 }
                 for (int[] arr : valores) {
@@ -222,10 +223,6 @@ public class Grafica extends JFrame {
         ventana.add(panel);
         ventana.setVisible(true);
 
-    }
-
-        ventana.add(panel);
-        ventana.setVisible(true);
 
     }
 }

@@ -74,15 +74,13 @@ public class Ordenamientos {
         }
     }
 
-    //relaxion
-
     public static void heapSort(int[] arreglo, int[] operaciones){
 
         int heapSize = buildHeap(arreglo, operaciones);
         for(int i=arreglo.length-1; i>0; i--){
             Utilerias.intercambiar(arreglo, 0, heapSize);
             heapSize--;
-            operaciones[5]++;
+            operaciones[4]++;
             heapify(arreglo,0,heapSize, operaciones);
         }
         
@@ -96,18 +94,18 @@ public class Ordenamientos {
         int largest;
         if(l<=heapSize && arreglo[l]>arreglo[i]){
             largest = l;
-            operaciones[5]++;
+            operaciones[4]++;
         }else{
             largest = i;
-            operaciones[5]++;
+            operaciones[4]++;
         }
         if(r<=heapSize && arreglo[r]>arreglo[largest]){
             largest = r;
-            operaciones[5]++;
+            operaciones[4]++;
         }
         if(largest!=i){
             Utilerias.intercambiar(arreglo, i, largest);
-            operaciones[5]++;
+            operaciones[4]++;
             heapify(arreglo, largest, heapSize, operaciones);
         }
             
@@ -117,7 +115,7 @@ public class Ordenamientos {
 
         int heapSize = arreglo.length - 1;
         for(int i=(arreglo.length-1)/2; i>=0; i--){
-            operaciones[5]++;
+            operaciones[4]++;
             heapify(arreglo, i, heapSize, operaciones);
         }
         return heapSize;
@@ -128,15 +126,15 @@ public class Ordenamientos {
         int pivote = arreglo[fin];
         int i = inicio - 1;
         for(int j=inicio; j<=fin-1; j++){
-            operaciones[6]++;
+            operaciones[5]++;
             if(arreglo[j]<=pivote){
                 i++;
                 Utilerias.intercambiar(arreglo, i, j);
-                operaciones[6]++;
+                operaciones[5]++;
             }       
         }
         Utilerias.intercambiar(arreglo, i+1, fin);
-        operaciones[6]++;
+        operaciones[5]++;
         return (i+1);
 
     }
@@ -144,7 +142,7 @@ public class Ordenamientos {
     public static void quickSort(int[] arreglo, int inicio, int fin, int[] operaciones){
 
         if(inicio<fin){
-            operaciones[6]++;
+            operaciones[5]++;
             int pivote = partition(arreglo, inicio, fin,operaciones);
             quickSort(arreglo, inicio, pivote-1, operaciones);
             quickSort(arreglo, pivote+1, fin, operaciones);
@@ -160,11 +158,11 @@ public class Ordenamientos {
 
         for(int i=0; i<n1; ++i){
             L[i] = arreglo[izq + i];
-            operaciones[7]++;
+            operaciones[6]++;
         }
         for (int j=0; j<n2; ++j){
             R[j] = arreglo[mid + 1 + j];
-            operaciones[7]++;
+            operaciones[6]++;
         }
 
         int i = 0, j = 0;
@@ -174,24 +172,24 @@ public class Ordenamientos {
             if (L[i] <= R[j]) {
                 arreglo[k] = L[i];
                 i++;
-                operaciones[7]++;
+                operaciones[6]++;
             } else {
                 arreglo[k] = R[j];
                 j++;
-                operaciones[7]++;
+                operaciones[6]++;
             }
             k++;
         }
 
         while(i<n1){
-            operaciones[7]++;
+            operaciones[6]++;
             arreglo[k] = L[i];
             i++;
             k++;
         }
 
         while(j<n2){
-            operaciones[7]++;
+            operaciones[6]++;
             arreglo[k] = R[j];
             j++;
             k++;
@@ -200,13 +198,15 @@ public class Ordenamientos {
 
     public static void mergeSort(int arreglo[], int izq, int der, int[] operaciones){
         if(izq < der){
-            operaciones[7]++;
+            operaciones[6]++;
             int mid = (izq + der) / 2;
             mergeSort(arreglo, izq, mid, operaciones);
             mergeSort(arreglo, mid + 1, der, operaciones);
             merge(arreglo, izq, mid, der, operaciones);
         }
     }
+
+    //relaxion [7]
     
     public static void countingSort(int[] arreglo, int[] operaciones){
 
@@ -275,11 +275,6 @@ public class Ordenamientos {
 			}
 		}
         
-    }
-
-    public static void mezclaDirecta(int[] arreglo, int n, int[] operaciones){
-    
-
     }
 
     public static void polifase(Queue<int[]> f0, int n, int[] operaciones){
@@ -390,5 +385,12 @@ public class Ordenamientos {
         //System.out.println(Arrays.toString(f0.peek()));
             
     }
+
+    public static void mezclaDirecta(int[] arreglo, int n, int[] operaciones){
+    
+
+    }
+
+    public static void mezclaEquilibrada(){}
 }
 

@@ -27,7 +27,7 @@ public class Principal{
 
                 ArrayList<int[]> miListaDeArreglos = new ArrayList<>();
                 miListaDeArreglos.add(arreglo);
-                for(int k=0; k<9; k++){
+                for(int k=0; k<13; k++){
                     miListaDeArreglos.add(Arrays.copyOf(arreglo, arreglo.length));
                 }
                 miCola.add(arreglo);
@@ -40,9 +40,12 @@ public class Principal{
                 Ordenamientos.heapSort(miListaDeArreglos.get(4), operaciones);
                 Ordenamientos.quickSort(miListaDeArreglos.get(5),0,numero-1, operaciones);
                 Ordenamientos.mergeSort(miListaDeArreglos.get(6),0,numero-1, operaciones);
-                Ordenamientos.countingSort(miListaDeArreglos.get(7), operaciones);
-                Ordenamientos.radixSort(miListaDeArreglos.get(8), operaciones);
+                //Ordenamientos.relaxionSort(miListaDeArreglos.get(7), operaciones);
+                Ordenamientos.countingSort(miListaDeArreglos.get(8), operaciones);
+                Ordenamientos.radixSort(miListaDeArreglos.get(9), operaciones);
                 Ordenamientos.polifase(miCola, numero/25, operaciones);
+                //Ordenamientos.mezclaDirecta(arreglo, numero, operaciones);
+                //Ordenamientos.mezclaEquilibrada();
 
                 int[] operacionesAux = miListaDeOperaciones.get(j);
                 for(int k=0; k<13; k++){
