@@ -1,4 +1,4 @@
-public class Ordenamientos2{
+public class MergeExterno{
 
      public static void merge(int arreglo[], int izq, int mid, int der){
         int n1 = mid - izq + 1;
@@ -49,8 +49,4 @@ public class Ordenamientos2{
             merge(arreglo, izq, mid, der);
         }
     }
-
-
-
-
 }

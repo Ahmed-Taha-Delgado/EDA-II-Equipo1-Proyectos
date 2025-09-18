@@ -117,7 +117,7 @@ public class Grafica extends JFrame {
                 for (int[] arr : valores) {
                     System.out.println(Arrays.toString(arr));
                 }   
-                Graf(elementos, nombres, valores, 2);
+                Graf(elementos, nombres, valores, 3);
                 
                 
             }
@@ -217,6 +217,8 @@ public class Grafica extends JFrame {
         ventana.setVisible(true);
 
     }
+
+    
 
 
 

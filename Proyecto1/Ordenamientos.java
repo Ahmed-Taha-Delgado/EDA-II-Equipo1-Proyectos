@@ -277,42 +277,113 @@ public class Ordenamientos {
 
     }
 
-    public static void polifase(Queue<Integer> f0, int n, int[] operaciones){
+    public static void polifase(Queue<int[]> f0, int n, int[] operaciones){
 
         Queue<int[]> f1 = new LinkedList<>();
         Queue<int[]> f2 = new LinkedList<>();
         Queue<int[]> f3 = new LinkedList<>();
 
-        int[] aux = new int[n];
         
-            while(f0.size()!=0){
-                for(int i=0; i<n; i++){
-                    aux[i] = f0.poll();
-                }
-                f1.add(aux);
+        int[] bloque = f0.poll();
+        int inicio = 0;
+        while(bloque.length > inicio){
 
-                for(int i=0; i<n; i++){
-                    aux[i] = f0.poll();
-                }
-                f2.add(aux);
-            }
+            int tamaño = Math.min(n,bloque.length - inicio);
+            int[] aux = new int[tamaño];
 
-            n *= 2;
-            /*
-            int[] aux2 = new int[n];
-
-            while(f1.size()!=0 || f2.size()!=0){
-
-                aux = f1.poll()
-                for(int i=0; i<f1.peek().length; i++){
-                    
-                }
-
+            for(int i=0; i<tamaño; i++){
+                aux[i] = bloque[inicio + i];
+                operaciones[9]++;
             }
             
-            */
+            if((inicio/n)%2==0){
+                f1.add(aux);
+            }else{
+                f2.add(aux);
+            }
+            
+            inicio += tamaño;
+        }   
+        
+        
+        int indice = 0;
+            
+        while(f0.size() + f1.size() + f2.size() + f3.size() > 1){
+            
+            while(f1.size()!=0 || f2.size()!=0){
 
+                int[] aux1 = f1.size()==0 ? new int[0] : f1.poll();
+                int[] aux2 = f2.size()==0 ? new int[0] : f2.poll();
 
+                if(aux1.length==0 && aux2.length==0)
+                    break;
+
+                int[] aux3 = new int[aux1.length + aux2.length];
+
+                for(int i=0; i<aux1.length; i++){
+                    aux3[i] = aux1[i];
+                    operaciones[9]++;
+                }
+                for(int i=0; i<aux2.length; i++){
+                    aux3[i+aux1.length] = aux2[i];
+                    operaciones[9]++;
+                }
+                MergeExterno.mergeSort(aux3,0,aux3.length-1);
+                
+                if(indice%2 == 0){
+                    f0.add(aux3);
+                }else{
+                    f3.add(aux3);
+                }
+                indice++;
+            }
+
+            indice = 0;
+            while(f0.size()!=0 || f3.size()!=0){
+
+                int[] aux1 = f0.size()==0 ? new int[0] : f0.poll();
+                int[] aux2 = f3.size()==0 ? new int[0] : f3.poll();
+
+                if(aux1.length==0 && aux2.length==0)
+                    break;
+
+                int[] aux3 = new int[aux1.length + aux2.length];
+
+                for(int i=0; i<aux1.length; i++){
+                    aux3[i] = aux1[i];
+                    operaciones[9]++;
+                }
+                for(int i=0; i<aux2.length; i++){
+                    aux3[i+aux1.length] = aux2[i];
+                    operaciones[9]++;
+                }
+                MergeExterno.mergeSort(aux3,0,aux3.length-1);
+                
+                if(indice%2 == 0){
+                    f1.add(aux3);
+                }else{
+                    f2.add(aux3);
+                }
+                indice++;
+            }
+
+        }
+        int[] resultado = null;
+
+        if (f0.size()!=0) 
+            resultado = f0.peek();
+        else if (f1.size()!=0) 
+            resultado = f1.peek();
+        else if (f2.size()!=0) 
+            resultado = f2.peek();
+        else if (f3.size()!=0) 
+            resultado = f3.peek();
+
+        f0.clear();     
+        f0.add(resultado); 
+        
+        //System.out.println(Arrays.toString(f0.peek()));
+            
     }
 
 }

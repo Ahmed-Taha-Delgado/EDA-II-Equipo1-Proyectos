@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Principal{
 
@@ -8,8 +10,9 @@ public class Principal{
         int[] elementos = {50, 100, 500, 800, 1000, 2000, 5000, 10000};
         ArrayList<int[]> miListaDeOperaciones = new ArrayList<>();
         for(int i=0; i<8; i++){
-            miListaDeOperaciones.add(new int[9]);
+            miListaDeOperaciones.add(new int[12]);
         }
+        Queue<int[]> miCola = new LinkedList<>();
 
         System.out.println("Se llenara 8 veces una lista usando tamaños predefinidos de numeros aleatorios");
         
@@ -27,8 +30,9 @@ public class Principal{
                 for(int k=0; k<9; k++){
                     miListaDeArreglos.add(Arrays.copyOf(arreglo, arreglo.length));
                 }
+                miCola.add(arreglo);
 
-                int[] operaciones = new int[9];
+                int[] operaciones = new int[12];
                 Ordenamientos.insertionSort(miListaDeArreglos.get(0), operaciones);
                 Ordenamientos.selectionSort(miListaDeArreglos.get(1), operaciones);
                 Ordenamientos.bubbleSort(miListaDeArreglos.get(2), operaciones);
@@ -38,14 +42,15 @@ public class Principal{
                 Ordenamientos.mergeSort(miListaDeArreglos.get(6),0,numero-1, operaciones);
                 Ordenamientos.countingSort(miListaDeArreglos.get(7), operaciones);
                 Ordenamientos.radixSort(miListaDeArreglos.get(8), operaciones);
+                Ordenamientos.polifase(miCola, numero/25, operaciones);
 
                 int[] operacionesAux = miListaDeOperaciones.get(j);
-                for(int k=0; k<9; k++){
+                for(int k=0; k<12; k++){
                     operacionesAux[k] += operaciones[k];
                 }
             }
             int[] operacionesAux = miListaDeOperaciones.get(j);
-            for(int k=0; k<9; k++){
+            for(int k=0; k<12; k++){
                 operacionesAux[k] /= 5;
             }
         }
