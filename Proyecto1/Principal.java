@@ -13,6 +13,8 @@ public class Principal{
             miListaDeOperaciones.add(new int[13]);
         }
         Queue<int[]> miCola = new LinkedList<>();
+        Queue<int[]> miCola2 = new LinkedList<>();
+        Queue<int[]> miCola3 = new LinkedList<>();
 
         System.out.println("Se llenara 8 veces una lista usando tamaños predefinidos de numeros aleatorios");
         
@@ -30,7 +32,9 @@ public class Principal{
                 for(int k=0; k<13; k++){
                     miListaDeArreglos.add(Arrays.copyOf(arreglo, arreglo.length));
                 }
-                miCola.add(arreglo);
+                miCola.add(miListaDeArreglos.get(10));
+                miCola2.add(miListaDeArreglos.get(11));
+                miCola3.add(miListaDeArreglos.get(12));
 
                 int[] operaciones = new int[13];
                 Ordenamientos.insertionSort(miListaDeArreglos.get(0), operaciones);
@@ -40,12 +44,14 @@ public class Principal{
                 Ordenamientos.heapSort(miListaDeArreglos.get(4), operaciones);
                 Ordenamientos.quickSort(miListaDeArreglos.get(5),0,numero-1, operaciones);
                 Ordenamientos.mergeSort(miListaDeArreglos.get(6),0,numero-1, operaciones);
-                //Ordenamientos.relaxionSort(miListaDeArreglos.get(7), operaciones);
+                Ordenamientos.patienceSort(miListaDeArreglos.get(7), operaciones);
                 Ordenamientos.countingSort(miListaDeArreglos.get(8), operaciones);
                 Ordenamientos.radixSort(miListaDeArreglos.get(9), operaciones);
                 Ordenamientos.polifase(miCola, numero/25, operaciones);
-                //Ordenamientos.mezclaDirecta(arreglo, numero, operaciones);
-                //Ordenamientos.mezclaEquilibrada();
+                Ordenamientos.mezclaDirecta(miCola2, operaciones);
+                Ordenamientos.mezclaEquilibrada(miCola3, operaciones);
+
+                //System.out.println(operaciones);
 
                 int[] operacionesAux = miListaDeOperaciones.get(j);
                 for(int k=0; k<13; k++){

@@ -206,7 +206,65 @@ public class Ordenamientos {
         }
     }
 
-    //relaxion [7]
+    public static void patienceSort(int[] arreglo, int[] operaciones){
+        List<Stack<Integer>> pilas = new ArrayList<>();
+        for(int num : arreglo){
+            int indice = findPile(pilas, num, operaciones);
+            if(indice == pilas.size()) {
+                Stack<Integer> pilaNueva = new Stack<>();
+                pilaNueva.push(num);
+                pilas.add(pilaNueva);
+                operaciones[7]++;
+            } else {
+                pilas.get(indice).push(num);
+                operaciones[7]++;
+            }
+        }
+
+        PriorityQueue<PileCard> pq = new PriorityQueue<>();
+        for (Stack<Integer> pila : pilas) {
+            pq.offer(new PileCard(pila.pop(), pila));
+            operaciones[7]++;
+        }
+
+        int i=0;
+        while(!pq.isEmpty()) {
+            PileCard pc = pq.poll();
+            //arreglo[i++] = pc.value;
+            operaciones[7]++;
+            if (!pc.pila.isEmpty()) {
+                pq.offer(new PileCard(pc.pila.pop(), pc.pila));
+                operaciones[7]++;
+            }
+        }
+    }
+    
+    public static int findPile(List<Stack<Integer>> pilas, int key, int[] operaciones) {
+        int left=0, right=pilas.size() - 1;
+        while (left <= right) {
+            int mid = (left+right) / 2;
+            operaciones[7]++;
+            if (pilas.get(mid).peek() >= key) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+
+    public static class PileCard implements Comparable<PileCard> {
+        int valor;
+        Stack<Integer> pila;
+        public PileCard(int valor, Stack<Integer> pila) {
+            this.valor = valor;
+            this.pila = pila;
+        }
+
+        public int compareTo(PileCard other) {
+            return Integer.compare(this.valor, other.valor);
+        }    
+    }
     
     public static void countingSort(int[] arreglo, int[] operaciones){
 
@@ -386,11 +444,177 @@ public class Ordenamientos {
             
     }
 
-    public static void mezclaDirecta(int[] arreglo, int n, int[] operaciones){
+    public static void mezclaDirecta(Queue<int[]> f0, int[] operaciones){
     
+        Queue<int[]> f1 = new LinkedList<>();
+        Queue<int[]> f2 = new LinkedList<>();
 
+        int indice = 0;
+        int[] aux = f0.poll();
+
+        while(indice!=aux.length){
+            int[] aux1 = new int[1];
+            aux1[0] = aux[indice];
+
+            if(indice%2 == 0){
+                f1.add(aux1);
+                
+            }else{
+                f2.add(aux1);
+                
+            }
+            operaciones[11]++;
+            indice++;
+        }
+
+        indice = 0;
+        while(f0.size() + f1.size() + f2.size() > 1){
+            
+            while(f1.size()!=0 || f2.size()!=0){
+
+                int[] aux1 = f1.size()==0 ? new int[0] : f1.poll();
+                int[] aux2 = f2.size()==0 ? new int[0] : f2.poll();
+
+                if(aux1.length==0 && aux2.length==0)
+                    break;
+
+                int[] aux3 = new int[aux1.length + aux2.length];
+
+                for(int i=0; i<aux1.length; i++){
+                    aux3[i] = aux1[i];
+                    operaciones[11]++;
+                }
+                for(int i=0; i<aux2.length; i++){
+                    aux3[i+aux1.length] = aux2[i];
+                    operaciones[11]++;
+                }
+                MergeExterno.mergeSort(aux3,0,aux3.length-1);
+
+                f0.add(aux3);
+            }
+
+            while(f0.size()!=0){
+
+                int[] aux4 = f0.poll();
+
+                if(indice%2 == 0){
+                    f1.add(aux4);
+                }else{
+                    f2.add(aux4);
+                    
+                }
+                operaciones[11]++;
+                indice++;
+            }
+
+        }
+        int[] resultado = null;
+
+        if (f0.size()!=0) 
+            resultado = f0.peek();
+        else if (f1.size()!=0) 
+            resultado = f1.peek();
+        else if (f2.size()!=0) 
+            resultado = f2.peek();
+
+        f0.clear();     
+        f0.add(resultado); 
+        
+        //System.out.println(Arrays.toString(f0.peek()));
     }
 
-    public static void mezclaEquilibrada(){}
+    public static void mezclaEquilibrada(Queue<int[]> f0, int[] operaciones){
+
+        Queue<int[]> f1 = new LinkedList<>();
+        Queue<int[]> f2 = new LinkedList<>();
+
+        int indice = 0;
+        int indice2 = 0;
+        int indice3 = 0;
+        int[] aux = f0.poll();
+
+        while(indice < aux.length){
+            
+            int tamaño = 1;
+            while(indice2 < aux.length-1 && aux[indice2]<aux[indice2+1]){
+                tamaño++;   
+                indice2++;
+                operaciones[12]++;
+            }
+            
+            int[] aux1 = new int[tamaño];
+            for(int i=0; i<tamaño && indice3<aux.length; i++){
+                aux1[i] = aux[indice3];
+                indice3++;
+            }
+
+            if(indice%2 == 0){
+                f1.add(aux1);
+                
+            }else{
+                f2.add(aux1);
+                
+            }
+            operaciones[12]++;
+            indice++;
+
+        }
+
+        indice = 0;
+        while(f0.size() + f1.size() + f2.size() > 1){
+            
+            while(f1.size()!=0 || f2.size()!=0){
+
+                int[] aux1 = f1.size()==0 ? new int[0] : f1.poll();
+                int[] aux2 = f2.size()==0 ? new int[0] : f2.poll();
+
+                if(aux1.length==0 && aux2.length==0)
+                    break;
+
+                int[] aux3 = new int[aux1.length + aux2.length];
+
+                for(int i=0; i<aux1.length; i++){
+                    aux3[i] = aux1[i];
+                    operaciones[12]++;
+                }
+                for(int i=0; i<aux2.length; i++){
+                    aux3[i+aux1.length] = aux2[i];
+                    operaciones[12]++;
+                }
+                MergeExterno.mergeSort(aux3,0,aux3.length-1);
+
+                f0.add(aux3);
+            }
+
+            while(f0.size()!=0){
+
+                int[] aux4 = f0.poll();
+
+                if(indice%2 == 0){
+                    f1.add(aux4);
+                }else{
+                    f2.add(aux4);
+                    
+                }
+                operaciones[12]++;
+                indice++;
+            }
+
+        }
+        int[] resultado = null;
+
+        if (f0.size()!=0) 
+            resultado = f0.peek();
+        else if (f1.size()!=0) 
+            resultado = f1.peek();
+        else if (f2.size()!=0) 
+            resultado = f2.peek();
+
+        f0.clear();     
+        f0.add(resultado); 
+        
+        System.out.println(Arrays.toString(f0.peek()));
+    
+    }
 }
 

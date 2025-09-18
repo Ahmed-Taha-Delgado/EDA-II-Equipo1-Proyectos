@@ -12,7 +12,7 @@ public class Grafica extends JFrame {
     public Grafica(int[] elementos, ArrayList<int[]> operaciones){
 
         ArrayList<int[]> valores = new ArrayList<>();
-        for(int i=0; i<5; i++){
+        for(int i=0; i<4; i++){
             valores.add(new int[8]);
         }
         ArrayList<String> nombres = new ArrayList<>(Arrays.asList("", "", "", ""));
@@ -102,7 +102,7 @@ public class Grafica extends JFrame {
         add(botonRaritos);
         add(Box.createVerticalStrut(10));
 
-        botonExternos = new JButton("Graficas algoritmos Externos y Extras");
+        botonExternos = new JButton("Graficas algoritmos Externos");
         botonExternos.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
