@@ -1,9 +1,18 @@
 import java.util.*;
 
+/**
+ * Clase que contiene implementaciones estáticas de diversos algoritmos de ordenamiento.
+ * Incluye algoritmos internos (eficientes e ineficientes), "raros" (no comparativos) y externos.
+ * Cada método de ordenamiento también contabiliza el número de operaciones realizadas.
+ */
 public class Ordenamientos {
     
-    public static void insertionSort(int[] arreglo, int[] operaciones){
-
+    /**
+     * Ordena un arreglo utilizando el algoritmo de Insertion Sort.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param operaciones Un arreglo de un solo elemento para almacenar el conteo de operaciones.
+     */
+    public static void insertionSort(int[] arreglo, int[] operaciones) {
         for(int i=1; i<arreglo.length; i++){
             int indice = arreglo[i];
             int j = i;
@@ -19,8 +28,12 @@ public class Ordenamientos {
 
     }
 
-    public static void selectionSort(int[] arreglo, int[] operaciones){
-
+    /**
+     * Ordena un arreglo utilizando el algoritmo de Selection Sort.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [1].
+     */
+    public static void selectionSort(int[] arreglo, int[] operaciones) {
         for(int i=0; i<arreglo.length; i++){
             int indiceMenor = i;
             for(int j=i+1; j<arreglo.length; j++){
@@ -40,8 +53,13 @@ public class Ordenamientos {
 
     }
 
-    public static void bubbleSortMejorado(int[] arreglo, int[] operaciones){
-
+    /**
+     * Ordena un arreglo utilizando una versión mejorada del algoritmo Bubble Sort,
+     * que se detiene si no se realizan intercambios en una pasada.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [2].
+     */
+    public static void bubbleSortMejorado(int[] arreglo, int[] operaciones) {
         for(int i=arreglo.length-1; i>0; i--){
             int actualizacion=0;
             for(int j=0; j<i; j++){
@@ -58,6 +76,11 @@ public class Ordenamientos {
         }
     }
 
+    /**
+     * Ordena un arreglo utilizando el algoritmo Gnome Sort.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [3].
+     */
     public static void gnomeSort(int arreglo[], int[] operaciones) {
         int index = 0;
 
@@ -74,8 +97,12 @@ public class Ordenamientos {
         }
     }
 
-    public static void heapSort(int[] arreglo, int[] operaciones){
-
+    /**
+     * Ordena un arreglo utilizando el algoritmo Heap Sort.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [4].
+     */
+    public static void heapSort(int[] arreglo, int[] operaciones) {
         int heapSize = buildHeap(arreglo, operaciones);
         for(int i=arreglo.length-1; i>0; i--){
             Utilerias.intercambiar(arreglo, 0, heapSize);
@@ -87,8 +114,14 @@ public class Ordenamientos {
 
     }
 
-    public static void heapify(int[] arreglo, int i, int heapSize, int[] operaciones){
-
+    /**
+     * Función auxiliar para heapSort. Mantiene la propiedad de montículo (heap) en un subárbol.
+     * @param arreglo El arreglo que representa el montículo.
+     * @param i El índice de la raíz del subárbol.
+     * @param heapSize El tamaño del montículo.
+     * @param operaciones Arreglo para el conteo de operaciones.
+     */
+    public static void heapify(int[] arreglo, int i, int heapSize, int[] operaciones) {
         int l = 2 * i + 1;
         int r = 2 * i + 2;
         int largest;
@@ -111,8 +144,13 @@ public class Ordenamientos {
             
     }
 
-    public static int buildHeap(int[] arreglo, int[] operaciones){
-
+    /**
+     * Construye un montículo (max-heap) a partir de un arreglo.
+     * @param arreglo El arreglo a convertir en montículo.
+     * @param operaciones Arreglo para el conteo de operaciones.
+     * @return El tamaño del montículo.
+     */
+    public static int buildHeap(int[] arreglo, int[] operaciones) {
         int heapSize = arreglo.length - 1;
         for(int i=(arreglo.length-1)/2; i>=0; i--){
             operaciones[4]++;
@@ -121,8 +159,15 @@ public class Ordenamientos {
         return heapSize;
     }
 
-    public static int partition(int[] arreglo, int inicio, int fin, int[] operaciones){
-
+    /**
+     * Función auxiliar para quickSort. Particiona el arreglo alrededor de un pivote.
+     * @param arreglo El arreglo a particionar.
+     * @param inicio El índice de inicio.
+     * @param fin El índice final.
+     * @param operaciones Arreglo para el conteo de operaciones.
+     * @return El índice del pivote después de la partición.
+     */
+    public static int partition(int[] arreglo, int inicio, int fin, int[] operaciones) {
         int pivote = arreglo[fin];
         int i = inicio - 1;
         for(int j=inicio; j<=fin-1; j++){
@@ -139,9 +184,15 @@ public class Ordenamientos {
 
     }
 
-    public static void quickSort(int[] arreglo, int inicio, int fin, int[] operaciones){
-
-        if(inicio<fin){
+    /**
+     * Ordena un arreglo utilizando el algoritmo Quick Sort de forma recursiva.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param inicio El índice de inicio del subarreglo a ordenar.
+     * @param fin El índice final del subarreglo a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [5].
+     */
+    public static void quickSort(int[] arreglo, int inicio, int fin, int[] operaciones) {
+                if(inicio<fin){
             operaciones[5]++;
             int pivote = partition(arreglo, inicio, fin,operaciones);
             quickSort(arreglo, inicio, pivote-1, operaciones);
@@ -149,7 +200,15 @@ public class Ordenamientos {
         }
     }
 
-    public static void merge(int arreglo[], int izq, int mid, int der, int[] operaciones){
+    /**
+     * Función auxiliar para mergeSort. Fusiona dos subarreglos ordenados.
+     * @param arreglo El arreglo principal.
+     * @param izq Índice de inicio del primer subarreglo.
+     * @param mid Índice final del primer subarreglo.
+     * @param der Índice final del segundo subarreglo.
+     * @param operaciones Arreglo para el conteo de operaciones.
+     */
+    public static void merge(int arreglo[], int izq, int mid, int der, int[] operaciones) {
         int n1 = mid - izq + 1;
         int n2 = der - mid;
 
@@ -196,8 +255,15 @@ public class Ordenamientos {
         }
     }
 
-    public static void mergeSort(int arreglo[], int izq, int der, int[] operaciones){
-        if(izq < der){
+    /**
+     * Ordena un arreglo utilizando el algoritmo Merge Sort de forma recursiva.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param izq El índice de inicio del subarreglo a ordenar.
+     * @param der El índice final del subarreglo a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [6].
+     */
+    public static void mergeSort(int arreglo[], int izq, int der, int[] operaciones) {
+            if(izq < der){
             operaciones[6]++;
             int mid = (izq + der) / 2;
             mergeSort(arreglo, izq, mid, operaciones);
@@ -206,7 +272,12 @@ public class Ordenamientos {
         }
     }
 
-    public static void patienceSort(int[] arreglo, int[] operaciones){
+    /**
+     * Ordena un arreglo utilizando el algoritmo Patience Sort.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [7].
+     */
+    public static void patienceSort(int[] arreglo, int[] operaciones) {
         List<Stack<Integer>> pilas = new ArrayList<>();
         for(int num : arreglo){
             int indice = findPile(pilas, num, operaciones);
@@ -239,6 +310,13 @@ public class Ordenamientos {
         }
     }
     
+    /**
+     * Encuentra la pila correcta para colocar un número en Patience Sort.
+     * @param pilas La lista de pilas.
+     * @param key El número a colocar.
+     * @param operaciones Arreglo para el conteo de operaciones.
+     * @return El índice de la pila donde se debe colocar el número.
+     */
     public static int findPile(List<Stack<Integer>> pilas, int key, int[] operaciones) {
         int left=0, right=pilas.size() - 1;
         while (left <= right) {
@@ -253,6 +331,10 @@ public class Ordenamientos {
         return left;
     }
 
+    /**
+     * Clase interna para representar una carta de una pila en Patience Sort,
+     * facilitando el uso de una PriorityQueue.
+     */
     public static class PileCard implements Comparable<PileCard> {
         int valor;
         Stack<Integer> pila;
@@ -266,8 +348,13 @@ public class Ordenamientos {
         }    
     }
     
-    public static void countingSort(int[] arreglo, int[] operaciones){
-
+    /**
+     * Ordena un arreglo utilizando el algoritmo Counting Sort.
+     * Este algoritmo es eficiente para enteros dentro de un rango específico.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [8].
+     */
+    public static void countingSort(int[] arreglo, int[] operaciones) {
         int maximo = Arrays.stream(arreglo).max().getAsInt();
         int minimo = Arrays.stream(arreglo).min().getAsInt();
         int rango = maximo - minimo + 1;
@@ -301,9 +388,12 @@ public class Ordenamientos {
 		}
 
     }
-
-    public static void radixSort(int[] arreglo, int[] operaciones){
-
+    /**
+     * Ordena un arreglo utilizando el algoritmo Radix Sort.
+     * @param arreglo El arreglo de enteros a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [9].
+     */
+    public static void radixSort(int[] arreglo, int[] operaciones) {
         LinkedList<Queue<Integer>> miListaDeColas = new LinkedList<>();
 
         int maximo = Arrays.stream(arreglo).max().getAsInt();
@@ -335,8 +425,14 @@ public class Ordenamientos {
         
     }
 
-    public static void polifase(Queue<int[]> f0, int n, int[] operaciones){
-
+    /**
+     * Implementa el algoritmo de ordenamiento externo Polifase.
+     * Utiliza colas para simular archivos auxiliares y fusiona bloques de datos.
+     * @param f0 La cola inicial que contiene el arreglo completo a ordenar.
+     * @param n El tamaño de los bloques iniciales a dividir.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [10].
+     */
+    public static void polifase(Queue<int[]> f0, int n, int[] operaciones) {
         Queue<int[]> f1 = new LinkedList<>();
         Queue<int[]> f2 = new LinkedList<>();
         Queue<int[]> f3 = new LinkedList<>();
@@ -444,8 +540,12 @@ public class Ordenamientos {
             
     }
 
-    public static void mezclaDirecta(Queue<int[]> f0, int[] operaciones){
-    
+    /**
+     * Implementa el algoritmo de ordenamiento externo de Mezcla Directa.
+     * @param f0 La cola inicial que contiene el arreglo a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [11].
+     */
+    public static void mezclaDirecta(Queue<int[]> f0, int[] operaciones) {
         Queue<int[]> f1 = new LinkedList<>();
         Queue<int[]> f2 = new LinkedList<>();
 
@@ -523,8 +623,12 @@ public class Ordenamientos {
         //System.out.println(Arrays.toString(f0.peek()));
     }
 
-    public static void mezclaEquilibrada(Queue<int[]> f0, int[] operaciones){
-
+    /**
+     * Implementa el algoritmo de ordenamiento externo de Mezcla Equilibrada (o Mezcla Natural).
+     * @param f0 La cola inicial que contiene el arreglo a ordenar.
+     * @param operaciones Un arreglo para almacenar el conteo de operaciones en la posición [12].
+     */
+    public static void mezclaEquilibrada(Queue<int[]> f0, int[] operaciones) {
         Queue<int[]> f1 = new LinkedList<>();
         Queue<int[]> f2 = new LinkedList<>();
 
@@ -617,4 +721,3 @@ public class Ordenamientos {
     
     }
 }
-

@@ -1,16 +1,24 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
+/**
+ * Clase que extiende JFrame para crear la interfaz gráfica principal de la aplicación.
+ * Muestra botones para que el usuario elija visualizar el rendimiento de diferentes
+ * categorías de algoritmos de ordenamiento (ineficientes, eficientes, raros, externos).
+ */
 public class Grafica extends JFrame {
     JButton botonIneficientes, botonEficientes, botonRaritos, botonExternos;
     
-    public Grafica(int[] elementos, ArrayList<int[]> operaciones){
-
+    /**
+     * Constructor de la clase Grafica.
+     * Inicializa la ventana principal y los botones para mostrar las diferentes gráficas.
+     * @param elementos Un arreglo con los tamaños de los conjuntos de datos utilizados (eje X).
+     * @param operaciones Un ArrayList de arreglos con los conteos de operaciones para cada algoritmo (eje Y).
+     */
+    public Grafica(int[] elementos, ArrayList<int[]> operaciones) {
         ArrayList<int[]> valores = new ArrayList<>();
         for(int i=0; i<4; i++){
             valores.add(new int[8]);
@@ -129,7 +137,15 @@ public class Grafica extends JFrame {
 
     }
 
-    public static void Graf(int[] elementos, ArrayList<String> nombres, ArrayList<int[]> valores, int tamaño){
+    /**
+     * Crea y muestra una nueva ventana (JFrame) que contiene el panel con la gráfica.
+     * Dibuja los ejes, leyendas y las líneas de datos que comparan los algoritmos.
+     * @param elementos Los valores para el eje X (tamaño del arreglo).
+     * @param nombres Los nombres de los algoritmos a graficar.
+     * @param valores Los datos de operaciones para el eje Y.
+     * @param tamaño El número de algoritmos a graficar en esta ventana.
+     */
+    public static void Graf(int[] elementos, ArrayList<String> nombres, ArrayList<int[]> valores, int tamaño) {
         JFrame ventana = new JFrame("Comparación de Algoritmos");
         ventana.setSize(1000, 700); // Ventana más grande
         ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
