@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -10,13 +12,14 @@ import java.awt.*;
 public class Grafica extends JFrame {
     JButton botonIneficientes, botonEficientes, botonRaritos, botonExternos;
     
-    /**
+     /**
      * Constructor de la clase Grafica
      * Va a inicializar la ventana principal y los botones para mostrar las diferentes gráficas
      * @param elementos Un arreglo con los tamaños de los conjuntos de datos utilizados (eje X)
      * @param operaciones Un ArrayList de arreglos con los conteos de operaciones para cada algoritmo (eje Y)
      */
-    public Grafica(int[] elementos, ArrayList<int[]> operaciones) {
+    public Grafica(int[] elementos, ArrayList<int[]> operaciones){
+
         ArrayList<int[]> valores = new ArrayList<>();
         for(int i=0; i<4; i++){
             valores.add(new int[8]);
@@ -134,7 +137,6 @@ public class Grafica extends JFrame {
         add(Box.createVerticalGlue());
 
     }
-
     /**
      * Crea y muestra una nueva ventana que contiene el panel con la gráfica
      * Dibuja los ejes, leyendas y las líneas de datos que comparan los algoritmos
@@ -143,86 +145,100 @@ public class Grafica extends JFrame {
      * @param valores Los datos de operaciones para el eje Y
      * @param tamaño El número de algoritmos a graficar en esta ventana
      */
-    public static void Graf(int[] elementos, ArrayList<String> nombres, ArrayList<int[]> valores, int tamaño) {
+    public static void Graf(int[] elementos, ArrayList<String> nombres, ArrayList<int[]> valores, int tamaño){
         JFrame ventana = new JFrame("Comparación de Algoritmos");
         ventana.setSize(1000, 700);
         ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventana.setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(){
+        JPanel panel = new JPanel() {
             @Override
-            protected void paintComponent(Graphics g){
+            protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setStroke(new BasicStroke(2));
+                g2.setStroke(new BasicStroke(2)); // solo línea sólida
 
                 int width = getWidth();
                 int height = getHeight();
                 int margin = 80;
 
-                Color[] colores = {Color.BLUE, Color.RED, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.CYAN};
+                // Generar colores distintos para cada algoritmo
+                Color[] colores = new Color[tamaño];
+                for (int i = 0; i < tamaño; i++) {
+                    float hue = i / (float) tamaño;
+                    colores[i] = Color.getHSBColor(hue, 0.8f, 0.8f);
+                }
 
+                // Calcular valor máximo
                 int max = 0;
-                for(int k=0; k<tamaño; k++)
-                    for(int val : valores.get(k))
-                        max = Math.max(max, val);
+                for (int[] vals : valores) {
+                    for (int val : vals) max = Math.max(max, val);
+                }
 
+                // Dibujar líneas horizontales de referencia
                 g2.setColor(Color.LIGHT_GRAY);
                 int steps = 20;
-                for(int i=0; i<=steps; i++){
-                    int y = height - margin - i*(height-2*margin)/steps;
+                for (int i = 0; i <= steps; i++) {
+                    int y = height - margin - i * (height - 2 * margin) / steps;
                     g2.drawLine(margin, y, width - margin, y);
-                    int yValue = (int)Math.round((double)max*i/steps);
                     g2.setColor(Color.BLACK);
-                    g2.drawString(String.valueOf(yValue), margin - 60, y + 5);
+                    int yValue = (int) Math.round((double) max * i / steps);
+                    g2.drawString(String.valueOf(yValue), margin - 75, y + 5);
                     g2.setColor(Color.LIGHT_GRAY);
                 }
-                for(int i=0; i<elementos.length; i++){
-                    int x = margin + i*(width-2*margin)/(elementos.length-1);
-                    g2.drawLine(x, height-margin, x, margin);
+
+                // Dibujar líneas verticales
+                for (int i = 0; i < elementos.length; i++) {
+                    int x = margin + i * (width - 2 * margin) / (elementos.length - 1);
+                    g2.drawLine(x, height - margin, x, margin);
                 }
 
+                // Dibujar ejes
                 g2.setColor(Color.BLACK);
-                g2.drawLine(margin, height-margin, width-margin, height-margin);
-                g2.drawLine(margin, height-margin, margin, margin);
+                g2.drawLine(margin, height - margin, width - margin, height - margin);
+                g2.drawLine(margin, height - margin, margin, margin);
 
-                for(int k=0; k<tamaño; k++){
-                    g2.setColor(colores[k % colores.length]);
-                    g2.fillRect(margin + k*150, 20, 15, 15);
+                // Dibujar leyenda en varias filas si es necesario
+                int itemsPerRow = 4;
+                for (int k = 0; k < tamaño; k++) {
+                    int row = k / itemsPerRow;
+                    int col = k % itemsPerRow;
+                    g2.setColor(colores[k]);
+                    g2.fillRect(margin + col * 200, 20 + row * 20, 15, 15);
                     g2.setColor(Color.BLACK);
-                    g2.drawString(nombres.get(k), margin + k*150 + 20, 32);
+                    g2.drawString(nombres.get(k), margin + col * 200 + 20, 32 + row * 20);
                 }
 
-                for(int k=0; k<tamaño; k++){
+                // Dibujar líneas de datos con desplazamiento leve
+                for (int k = 0; k < tamaño; k++) {
                     int[] datos = valores.get(k);
-                    g2.setColor(colores[k % colores.length]);
+                    g2.setColor(colores[k]);
 
+                    int offset = k * 3; // pequeño desplazamiento vertical
                     int prevX = margin;
-                    int prevY = height - margin - (int)Math.round((double)datos[0]/max * (height-2*margin));
+                    int prevY = height - margin - (int) Math.round((double) datos[0] / max * (height - 2 * margin)) - offset;
+                    g2.fillOval(prevX - 3, prevY - 3, 6, 6);
 
-                    g2.fillOval(prevX-3, prevY-3, 6, 6);
-
-                    for(int i=1; i<elementos.length; i++){
-                        int x = margin + i*(width-2*margin)/(elementos.length-1);
-                        int y = height - margin - (int)Math.round((double)datos[i]/max*(height-2*margin));
+                    for (int i = 1; i < elementos.length; i++) {
+                        int x = margin + i * (width - 2 * margin) / (elementos.length - 1);
+                        int y = height - margin - (int) Math.round((double) datos[i] / max * (height - 2 * margin)) - offset;
                         g2.drawLine(prevX, prevY, x, y);
-                        g2.fillOval(x-3, y-3, 6, 6);
+                        g2.fillOval(x - 3, y - 3, 6, 6);
                         prevX = x;
                         prevY = y;
                     }
                 }
 
+                // Etiquetas del eje X
                 g2.setColor(Color.BLACK);
-                for(int i=0; i<elementos.length; i++){
-                    int x = margin + i*(width-2*margin)/(elementos.length-1);
-                    g2.drawString(String.valueOf(elementos[i]), x-10, height - margin + 25);
+                for (int i = 0; i < elementos.length; i++) {
+                    int x = margin + i * (width - 2 * margin) / (elementos.length - 1);
+                    g2.drawString(String.valueOf(elementos[i]), x - 10, height - margin + 25);
                 }
 
-
-                g2.drawString("Numero de elementos", width/2 - 50, height - 20);
-                g2.drawString("Numero de operaciones", 20, margin - 10);
+                g2.drawString("Número de elementos", width / 2 - 50, height - 20);
+                g2.drawString("Número de operaciones", 20, margin - 10);
             }
         };
 
