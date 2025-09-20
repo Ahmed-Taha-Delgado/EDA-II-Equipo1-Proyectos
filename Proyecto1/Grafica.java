@@ -73,7 +73,7 @@ public class Grafica extends JFrame {
                 nombres.set(0, "QuickSort");
                 nombres.set(1, "HeapSort");
                 nombres.set(2, "MergeSort");
-                nombres.set(3, "RelaxionSort");
+                nombres.set(3, "PatienceSort");
                 for(int j=0; j<4; j++){    
                     for(int i=0; i<8; i++){
                         valores.get(j)[i] = operaciones.get(i)[j+4];
