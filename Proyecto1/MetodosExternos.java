@@ -1,6 +1,9 @@
 import java.util.*;
 
-
+/**
+ * Clase que contiene los métodos necesarios para ordenamiento de arreglos y manejo de heaps
+ * Va a tener implementación de Merge Sort
+ */
 public class MetodosExternos {
 
     /**
@@ -68,7 +71,7 @@ public class MetodosExternos {
 
     /**
      * Construye un min-heap a partir de una lista de elementos
-     * @param heap Lista de elementos de tipo {@link PileCard}
+     * @param heap Lista de elementos de tipo PileCard
      * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
      */
     public static void buildHeap(List<Ordenamientos.PileCard> heap, int[] operaciones) {
@@ -81,7 +84,7 @@ public class MetodosExternos {
      * Extrae el elemento mínimo del heap (la raíz)
      * @param heap Lista que representa el min-heap
      * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
-     * @return El objeto {@link PileCard} con el valor mínimo
+     * @return El PileCard con el valor mínimo
      */
     public static Ordenamientos.PileCard extractMin(List<Ordenamientos.PileCard> heap, int[] operaciones) {
         Ordenamientos.PileCard min = heap.get(0);
@@ -96,7 +99,7 @@ public class MetodosExternos {
     /**
      * Inserta un nuevo elemento en el heap y lo reordena para mantener la propiedad de min-heap
      * @param heap Lista que representa el min-heap
-     * @param card El elemento {@link PileCard} a insertar
+     * @param card El elemento PileCard a insertar
      * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
      */
     public static void insertHeap(List<Ordenamientos.PileCard> heap, Ordenamientos.PileCard card, int[] operaciones) {

@@ -345,7 +345,7 @@ public class Ordenamientos {
         Stack<Integer> pila;
 
         /**
-        * Constructor de un objeto {@code PileCard}
+        * Constructor de un objeto PileCard
         * @param valor Valor entero de la carta
         * @param pila Referencia a la pila de la que proviene la carta
         */
