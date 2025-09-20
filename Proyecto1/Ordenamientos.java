@@ -38,6 +38,7 @@ public class Ordenamientos {
                 operaciones[1]++;
                 if(arreglo[j]<arreglo[indiceMenor]){
                     indiceMenor = j;
+                    operaciones[1]++;
                 }
                 if(i!=indiceMenor){
                     Utilerias.intercambiar(arreglo, i, indiceMenor);
@@ -190,7 +191,7 @@ public class Ordenamientos {
      * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
      */
     public static void quickSort(int[] arreglo, int inicio, int fin, int[] operaciones) {
-                if(inicio<fin){
+        if(inicio<fin){
             operaciones[5]++;
             int pivote = partition(arreglo, inicio, fin,operaciones);
             quickSort(arreglo, inicio, pivote-1, operaciones);
@@ -261,7 +262,7 @@ public class Ordenamientos {
      * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
      */
     public static void mergeSort(int arreglo[], int izq, int der, int[] operaciones) {
-            if(izq < der){
+        if(izq < der){
             operaciones[6]++;
             int mid = (izq + der) / 2;
             mergeSort(arreglo, izq, mid, operaciones);
@@ -278,6 +279,7 @@ public class Ordenamientos {
     public static void patienceSort(int[] arreglo, int[] operaciones) {
         List<Stack<Integer>> pilas = new ArrayList<>();
         for(int num : arreglo){
+            operaciones[7]++;
             int indice = findPile(pilas, num, operaciones);
             if(indice == pilas.size()) {
                 Stack<Integer> pilaNueva = new Stack<>();
@@ -298,6 +300,7 @@ public class Ordenamientos {
 
         int i=0;
         while(!pq.isEmpty()) {
+            
             PileCard pc = pq.poll();
             //arreglo[i++] = pc.value;
             operaciones[7]++;
@@ -322,8 +325,10 @@ public class Ordenamientos {
             operaciones[7]++;
             if (pilas.get(mid).peek() >= key) {
                 right = mid - 1;
+                operaciones[7]++;
             } else {
                 left = mid + 1;
+                operaciones[7]++;
             }
         }
         return left;
@@ -343,6 +348,7 @@ public class Ordenamientos {
 
         public int compareTo(PileCard other) {
             return Integer.compare(this.valor, other.valor);
+            
         }    
     }
     
@@ -404,7 +410,7 @@ public class Ordenamientos {
 			for(int j=0; j<arreglo.length; j++){
 				int cola = (arreglo[j]/posicion)%10;
 				miListaDeColas.get(cola).add(arreglo[j]);
-                operaciones[9] += 2;
+                operaciones[9] += 3;
 			}
 			posicion = posicion * 10;
 			
@@ -550,7 +556,7 @@ public class Ordenamientos {
         while(indice!=aux.length){
             int[] aux1 = new int[1];
             aux1[0] = aux[indice];
-
+            operaciones[11]++;
             if(indice%2 == 0){
                 f1.add(aux1);
                 
@@ -558,7 +564,6 @@ public class Ordenamientos {
                 f2.add(aux1);
                 
             }
-            operaciones[11]++;
             indice++;
         }
 
@@ -598,7 +603,6 @@ public class Ordenamientos {
                     f2.add(aux4);
                     
                 }
-                operaciones[11]++;
                 indice++;
             }
 
@@ -645,6 +649,7 @@ public class Ordenamientos {
             for(int i=0; i<tamaño && indice3<aux.length; i++){
                 aux1[i] = aux[indice3];
                 indice3++;
+                operaciones[12]++;
             }
 
             if(indice%2 == 0){
@@ -654,7 +659,6 @@ public class Ordenamientos {
                 f2.add(aux1);
                 
             }
-            operaciones[12]++;
             indice++;
 
         }
@@ -695,7 +699,6 @@ public class Ordenamientos {
                     f2.add(aux4);
                     
                 }
-                operaciones[12]++;
                 indice++;
             }
 
@@ -711,8 +714,6 @@ public class Ordenamientos {
 
         f0.clear();     
         f0.add(resultado); 
-        
-        System.out.println(Arrays.toString(f0.peek()));
     
     }
 }

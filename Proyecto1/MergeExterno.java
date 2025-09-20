@@ -51,7 +51,6 @@ public class MergeExterno {
             k++;
         }
     }
-
     /**
      * Ordena un arreglo de forma recursiva utilizando Merge Sort
      * @param arreglo El arreglo de enteros a ordenar
