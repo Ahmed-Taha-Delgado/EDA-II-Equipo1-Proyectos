@@ -278,10 +278,11 @@ public class Ordenamientos {
      */
     public static void patienceSort(int[] arreglo, int[] operaciones) {
         List<Stack<Integer>> pilas = new ArrayList<>();
-        for(int num : arreglo){
+
+        for (int num : arreglo) {
             operaciones[7]++;
             int indice = findPile(pilas, num, operaciones);
-            if(indice == pilas.size()) {
+            if (indice == pilas.size()) {
                 Stack<Integer> pilaNueva = new Stack<>();
                 pilaNueva.push(num);
                 pilas.add(pilaNueva);
@@ -292,25 +293,26 @@ public class Ordenamientos {
             }
         }
 
-        PriorityQueue<PileCard> pq = new PriorityQueue<>();
+        List<PileCard> heap = new ArrayList<>();
         for (Stack<Integer> pila : pilas) {
-            pq.offer(new PileCard(pila.pop(), pila));
+            heap.add(new PileCard(pila.pop(), pila));
             operaciones[7]++;
         }
 
-        int i=0;
-        while(!pq.isEmpty()) {
-            
-            PileCard pc = pq.poll();
-            //arreglo[i++] = pc.value;
+        MetodosExternos.buildHeap(heap, operaciones);
+
+        int i = 0;
+        while (!heap.isEmpty()) {
+            PileCard min = MetodosExternos.extractMin(heap, operaciones);
+            arreglo[i++] = min.valor;
             operaciones[7]++;
-            if (!pc.pila.isEmpty()) {
-                pq.offer(new PileCard(pc.pila.pop(), pc.pila));
+            if (!min.pila.isEmpty()) {
+                MetodosExternos.insertHeap(heap, new PileCard(min.pila.pop(), min.pila), operaciones);
                 operaciones[7]++;
             }
         }
     }
-    
+
     /**
      * Encuentra la pila correcta para colocar un número en Patience Sort
      * @param pilas La lista de pilas
@@ -318,10 +320,10 @@ public class Ordenamientos {
      * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
      * @return El índice de la pila donde se debe colocar el número
      */
-    public static int findPile(List<Stack<Integer>> pilas, int key, int[] operaciones) {
-        int left=0, right=pilas.size() - 1;
+    private static int findPile(List<Stack<Integer>> pilas, int key, int[] operaciones) {
+        int left = 0, right = pilas.size() - 1;
         while (left <= right) {
-            int mid = (left+right) / 2;
+            int mid = (left + right) / 2;
             operaciones[7]++;
             if (pilas.get(mid).peek() >= key) {
                 right = mid - 1;
@@ -335,21 +337,22 @@ public class Ordenamientos {
     }
 
     /**
-     * Clase interna para representar una carta de una pila en Patience Sort,
-     * va a hacer más fácil el uso de una PriorityQueue.
+     * Clase auxiliar para representar una carta dentro de una pila en
+     * la implementación de Patience Sort.
      */
-    public static class PileCard implements Comparable<PileCard> {
+    public static class PileCard {
         int valor;
         Stack<Integer> pila;
+
+        /**
+        * Constructor de un objeto {@code PileCard}
+        * @param valor Valor entero de la carta
+        * @param pila Referencia a la pila de la que proviene la carta
+        */
         public PileCard(int valor, Stack<Integer> pila) {
             this.valor = valor;
             this.pila = pila;
         }
-
-        public int compareTo(PileCard other) {
-            return Integer.compare(this.valor, other.valor);
-            
-        }    
     }
     
     /**
@@ -483,7 +486,7 @@ public class Ordenamientos {
                     aux3[i+aux1.length] = aux2[i];
                     operaciones[10]++;
                 }
-                MergeExterno.mergeSort(aux3,0,aux3.length-1);
+                MetodosExternos.mergeSort(aux3,0,aux3.length-1);
                 
                 if(indice%2 == 0){
                     f0.add(aux3);
@@ -512,7 +515,7 @@ public class Ordenamientos {
                     aux3[i+aux1.length] = aux2[i];
                     operaciones[10]++;
                 }
-                MergeExterno.mergeSort(aux3,0,aux3.length-1);
+                MetodosExternos.mergeSort(aux3,0,aux3.length-1);
                 
                 if(indice%2 == 0){
                     f1.add(aux3);
@@ -588,7 +591,7 @@ public class Ordenamientos {
                     aux3[i+aux1.length] = aux2[i];
                     operaciones[11]++;
                 }
-                MergeExterno.mergeSort(aux3,0,aux3.length-1);
+                MetodosExternos.mergeSort(aux3,0,aux3.length-1);
 
                 f0.add(aux3);
             }
@@ -684,7 +687,7 @@ public class Ordenamientos {
                     aux3[i+aux1.length] = aux2[i];
                     operaciones[12]++;
                 }
-                MergeExterno.mergeSort(aux3,0,aux3.length-1);
+                MetodosExternos.mergeSort(aux3,0,aux3.length-1);
 
                 f0.add(aux3);
             }
