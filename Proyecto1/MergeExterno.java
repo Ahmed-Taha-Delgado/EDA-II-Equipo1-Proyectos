@@ -1,16 +1,15 @@
 /**
- * Clase de utilidad que proporciona una implementación estándar del algoritmo Merge Sort.
- * Esta versión no cuenta las operaciones y es utilizada como un método auxiliar por los
+ * Clase de utilidad que es utilizada como un método auxiliar por los
  * algoritmos de ordenamiento externo en la clase {@link Ordenamientos}.
  */
 public class MergeExterno {
 
     /**
-     * Fusiona dos subarreglos ordenados en un único subarreglo ordenado.
-     * @param arreglo El arreglo principal que contiene los subarreglos.
-     * @param izq El índice de inicio del primer subarreglo.
-     * @param mid El índice final del primer subarreglo.
-     * @param der El índice final del segundo subarreglo.
+     * Fusiona dos subarreglos ordenados en un único subarreglo ordenado
+     * @param arreglo El arreglo principal que contiene los subarreglos
+     * @param izq El índice de inicio del primer subarreglo
+     * @param mid El índice final del primer subarreglo
+     * @param der El índice final del segundo subarreglo
      */
     public static void merge(int arreglo[], int izq, int mid, int der) {
         int n1 = mid - izq + 1;
@@ -54,10 +53,10 @@ public class MergeExterno {
     }
 
     /**
-     * Ordena un arreglo (o subarreglo) de forma recursiva utilizando el algoritmo Merge Sort.
-     * @param arreglo El arreglo de enteros a ordenar.
-     * @param izq El índice de inicio del subarreglo a ordenar.
-     * @param der El índice final del subarreglo a ordenar.
+     * Ordena un arreglo de forma recursiva utilizando Merge Sort
+     * @param arreglo El arreglo de enteros a ordenar
+     * @param izq El índice de inicio del subarreglo a ordenar
+     * @param der El índice final del subarreglo a ordenar
      */
     public static void mergeSort(int arreglo[], int izq, int der) {
         if(izq < der){

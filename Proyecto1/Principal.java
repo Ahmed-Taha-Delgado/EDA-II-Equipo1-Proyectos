@@ -4,19 +4,17 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Clase principal que orquesta la ejecución y comparación de múltiples algoritmos de ordenamiento.
- * Genera arreglos de distintos tamaños con números aleatorios, ejecuta 13 algoritmos de ordenamiento diferentes,
- * cuenta el número de operaciones de cada uno, promedia los resultados y finalmente muestra una
- * interfaz gráfica para visualizar la eficiencia de los algoritmos.
+ * Clase principal en la que se va a implementar la ejecución y comparación de los algoritmos de ordenamiento
+ * Va a generar arreglos de distintos tamaños con números aleatorios, ejecuta 13 algoritmos de ordenamiento diferentes,
+ * cuenta el número de operaciones de cada uno, promedia los resultados y finalmente va a mostrar una
+ * interfaz gráfica para visualizar la eficiencia de los algoritmos
  */
 public class Principal {
 
     /**
-     * Punto de entrada principal del programa.
      * Define los tamaños de los arreglos a ordenar, ejecuta los algoritmos 5 veces para cada tamaño
      * para obtener un promedio de operaciones, y luego inicializa la ventana de la gráfica
-     * con los resultados.
-     * @param args Argumentos de la línea de comandos (no se utilizan).
+     * con los resultados
      */
     public static void main(String[] args) {
         
@@ -31,18 +29,15 @@ public class Principal {
 
         System.out.println("Se llenara 8 veces una lista usando tamaños predefinidos de numeros aleatorios");
         
-        // Bucle principal para iterar sobre los diferentes tamaños de arreglos.
         for (int j = 0; j < 8; j++) {
             
             int numero = elementos[j];
 
-            // Bucle para repetir el proceso 5 veces y obtener un promedio.
             for (int i = 0; i < 5; i++) {
 
                 int[] arreglo = new int[numero];
                 Utilerias.crearArregloAleatorio(arreglo, numero);
 
-                // Se crean copias del arreglo original para cada algoritmo de ordenamiento.
                 ArrayList<int[]> miListaDeArreglos = new ArrayList<>();
                 miListaDeArreglos.add(arreglo);
                 for (int k = 0; k < 13; k++) {
@@ -67,13 +62,11 @@ public class Principal {
                 Ordenamientos.mezclaDirecta(miCola2, operaciones);
                 Ordenamientos.mezclaEquilibrada(miCola3, operaciones);
 
-                // Acumula las operaciones de cada ejecución.
                 int[] operacionesAux = miListaDeOperaciones.get(j);
                 for (int k = 0; k < 13; k++) {
                     operacionesAux[k] += operaciones[k];
                 }
             }
-            // Calcula el promedio de las operaciones.
             int[] operacionesAux = miListaDeOperaciones.get(j);
             for (int k = 0; k < 13; k++) {
                 operacionesAux[k] /= 5;
@@ -85,7 +78,6 @@ public class Principal {
             System.out.println("Tamaño " + elementos[j] + ": " + Arrays.toString(miListaDeOperaciones.get(j)));
         }
 
-        // Crea y muestra la ventana de la gráfica.
         Grafica verGraficas = new Grafica(elementos, miListaDeOperaciones);
         verGraficas.setVisible(true);
     }
