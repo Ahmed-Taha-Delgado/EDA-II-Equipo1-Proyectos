@@ -101,6 +101,11 @@ public class Grafica extends JFrame {
                         valores.get(j)[i] = operaciones.get(i)[j+8];
                     }
                 }
+                for(int j=0; j<2; j++){    
+                    for(int i=0; i<8; i++){
+                        valores.get(j+2)[i] = 0;
+                    }
+                }
                 for (int[] arr : valores) {
                     System.out.println(Arrays.toString(arr));
                 }   
@@ -122,6 +127,11 @@ public class Grafica extends JFrame {
                 for(int j=0; j<3; j++){    
                     for(int i=0; i<8; i++){
                         valores.get(j)[i] = operaciones.get(i)[j+10];
+                    }
+                }
+                for(int j=0; j<1; j++){    
+                    for(int i=0; i<8; i++){
+                        valores.get(j+3)[i] = 0;
                     }
                 }
                 for (int[] arr : valores) {
