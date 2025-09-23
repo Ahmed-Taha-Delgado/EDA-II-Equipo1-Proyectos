@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -22,10 +22,9 @@ public class Grafica extends JFrame {
 
         ArrayList<int[]> valores = new ArrayList<>();
         for(int i=0; i<4; i++){
-            valores.add(new int[8]);
+            valores.add(new int[20]);
         }
         ArrayList<String> nombres = new ArrayList<>(Arrays.asList("", "", "", ""));
-        int[] aux;
 
         setTitle("Graficas de algoritmos");
         setSize(500, 300);
@@ -51,7 +50,7 @@ public class Grafica extends JFrame {
                 nombres.set(3, "GnomeSort");
 
                 for(int j=0; j<4; j++){    
-                    for(int i=0; i<8; i++){
+                    for(int i=0; i<20; i++){
                         valores.get(j)[i] = operaciones.get(i)[j];
                     }
                 }
@@ -75,7 +74,7 @@ public class Grafica extends JFrame {
                 nombres.set(2, "MergeSort");
                 nombres.set(3, "PatienceSort");
                 for(int j=0; j<4; j++){    
-                    for(int i=0; i<8; i++){
+                    for(int i=0; i<20; i++){
                         valores.get(j)[i] = operaciones.get(i)[j+4];
                     }
                 }
@@ -97,12 +96,12 @@ public class Grafica extends JFrame {
                 nombres.set(0, "CountingSort");
                 nombres.set(1, "RadixSort");
                 for(int j=0; j<2; j++){    
-                    for(int i=0; i<8; i++){
+                    for(int i=0; i<20; i++){
                         valores.get(j)[i] = operaciones.get(i)[j+8];
                     }
                 }
                 for(int j=0; j<2; j++){    
-                    for(int i=0; i<8; i++){
+                    for(int i=0; i<20; i++){
                         valores.get(j+2)[i] = 0;
                     }
                 }
@@ -125,12 +124,12 @@ public class Grafica extends JFrame {
                 nombres.set(1, "Mezcla Directa");
                 nombres.set(2, "Mezcla Equilibrada");
                 for(int j=0; j<3; j++){    
-                    for(int i=0; i<8; i++){
+                    for(int i=0; i<20; i++){
                         valores.get(j)[i] = operaciones.get(i)[j+10];
                     }
                 }
                 for(int j=0; j<1; j++){    
-                    for(int i=0; i<8; i++){
+                    for(int i=0; i<20; i++){
                         valores.get(j+3)[i] = 0;
                     }
                 }
@@ -156,99 +155,98 @@ public class Grafica extends JFrame {
      * @param tamaño El número de algoritmos a graficar en esta ventana
      */
     public static void Graf(int[] elementos, ArrayList<String> nombres, ArrayList<int[]> valores, int tamaño){
-        JFrame ventana = new JFrame("Comparación de Algoritmos");
+        JFrame ventana = new JFrame("Comparacion de Algoritmos");
         ventana.setSize(1000, 700);
         ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventana.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel() {
             @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g;
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setStroke(new BasicStroke(2)); // solo línea sólida
+            protected void paintComponent(Graphics grafica){
+                super.paintComponent(grafica);
+                Graphics2D grafica2 = (Graphics2D) grafica;
+                grafica2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                grafica2.setStroke(new BasicStroke(2)); // solo línea sólida
 
-                int width = getWidth();
-                int height = getHeight();
-                int margin = 80;
+                int ancho = getWidth();
+                int alto = getHeight();
 
-                // Generar colores distintos para cada algoritmo
-                Color[] colores = new Color[tamaño];
-                for (int i = 0; i < tamaño; i++) {
-                    float hue = i / (float) tamaño;
-                    colores[i] = Color.getHSBColor(hue, 0.8f, 0.8f);
-                }
+                // Generar Colores distintos para cada algoritmo
+                Color[] Colores = {
+                    new Color(112,214,255), 
+                    new Color(255,112,166), 
+                    new Color(255,151,112), 
+                    new Color(255,214,112)
+                };
 
                 // Calcular valor máximo
                 int max = 0;
-                for (int[] vals : valores) {
-                    for (int val : vals) max = Math.max(max, val);
+                for (int[] valor : valores) {
+                    for (int val : valor) 
+                        max = Math.max(max, val);
                 }
 
                 // Dibujar líneas horizontales de referencia
-                g2.setColor(Color.LIGHT_GRAY);
-                int steps = 20;
-                for (int i = 0; i <= steps; i++) {
-                    int y = height - margin - i * (height - 2 * margin) / steps;
-                    g2.drawLine(margin, y, width - margin, y);
-                    g2.setColor(Color.BLACK);
-                    int yValue = (int) Math.round((double) max * i / steps);
-                    g2.drawString(String.valueOf(yValue), margin - 75, y + 5);
-                    g2.setColor(Color.LIGHT_GRAY);
+                grafica2.setColor(Color.LIGHT_GRAY);
+                for (int i=0; i<=20; i++) {
+                    int y = alto - 80 - i * (alto - 2 * 80) / 20;
+                    grafica2.drawLine(80, y, ancho - 80, y);
+                    grafica2.setColor(Color.black);
+                    int valorY = (int) Math.round((double) max * i / 20);
+                    grafica2.drawString(String.valueOf(valorY), 80 - 75, y + 5);
+                    grafica2.setColor(Color.LIGHT_GRAY);
                 }
 
                 // Dibujar líneas verticales
                 for (int i = 0; i < elementos.length; i++) {
-                    int x = margin + i * (width - 2 * margin) / (elementos.length - 1);
-                    g2.drawLine(x, height - margin, x, margin);
+                    int x = 80 + i * (ancho - 2 * 80) / (elementos.length - 1);
+                    grafica2.drawLine(x, alto - 80, x, 80);
                 }
 
                 // Dibujar ejes
-                g2.setColor(Color.BLACK);
-                g2.drawLine(margin, height - margin, width - margin, height - margin);
-                g2.drawLine(margin, height - margin, margin, margin);
+                grafica2.setColor(Color.black);
+                grafica2.drawLine(80, alto - 80, ancho - 80, alto - 80);
+                grafica2.drawLine(80, alto - 80, 80, 80);
 
                 // Dibujar leyenda en varias filas si es necesario
-                int itemsPerRow = 4;
-                for (int k = 0; k < tamaño; k++) {
-                    int row = k / itemsPerRow;
-                    int col = k % itemsPerRow;
-                    g2.setColor(colores[k]);
-                    g2.fillRect(margin + col * 200, 20 + row * 20, 15, 15);
-                    g2.setColor(Color.BLACK);
-                    g2.drawString(nombres.get(k), margin + col * 200 + 20, 32 + row * 20);
+                for (int i = 0; i < tamaño; i++) {
+                    int fila = i / 4;
+                    int columna = i % 4;
+                    grafica2.setColor(Colores[i]);
+                    grafica2.fillRect(80 + columna * 200, 20 + fila * 20, 15, 15);
+                    grafica2.setColor(Color.black);
+                    grafica2.drawString(nombres.get(i), 80 + columna * 200 + 20, 32 + fila * 20);
                 }
 
                 // Dibujar líneas de datos con desplazamiento leve
-                for (int k = 0; k < tamaño; k++) {
+                for (int k = 0; k < tamaño; k++){
                     int[] datos = valores.get(k);
-                    g2.setColor(colores[k]);
+                    grafica2.setColor(Colores[k]);
 
-                    int offset = k * 3; // pequeño desplazamiento vertical
-                    int prevX = margin;
-                    int prevY = height - margin - (int) Math.round((double) datos[0] / max * (height - 2 * margin)) - offset;
-                    g2.fillOval(prevX - 3, prevY - 3, 6, 6);
+                    int desplazamiento = k * 3; // pequeño desplazamiento vertical
+                    int X = 80;
+                    int Y = alto - 80 - (int) Math.round((double) datos[0] / max * (alto - 2 * 80)) - desplazamiento;
+                    grafica2.fillOval(X - 3, Y - 3, 6, 6);
 
                     for (int i = 1; i < elementos.length; i++) {
-                        int x = margin + i * (width - 2 * margin) / (elementos.length - 1);
-                        int y = height - margin - (int) Math.round((double) datos[i] / max * (height - 2 * margin)) - offset;
-                        g2.drawLine(prevX, prevY, x, y);
-                        g2.fillOval(x - 3, y - 3, 6, 6);
-                        prevX = x;
-                        prevY = y;
+                        int x = 80 + i * (ancho - 2 * 80) / (elementos.length - 1);
+                        int y = alto - 80 - (int) Math.round((double) datos[i] / max * (alto - 2 * 80)) - desplazamiento;
+                        grafica2.drawLine(X, Y, x, y);
+                        grafica2.fillOval(x - 3, y - 3, 6, 6);
+                        X = x;
+                        Y = y;
                     }
                 }
 
                 // Etiquetas del eje X
-                g2.setColor(Color.BLACK);
+                grafica2.setColor(Color.black);
                 for (int i = 0; i < elementos.length; i++) {
-                    int x = margin + i * (width - 2 * margin) / (elementos.length - 1);
-                    g2.drawString(String.valueOf(elementos[i]), x - 10, height - margin + 25);
+                    int x = 80 + i * (ancho - 2 * 80) / (elementos.length - 1);
+                    grafica2.drawString(String.valueOf(elementos[i]), x - 10, alto - 80 + 25);
                 }
 
-                g2.drawString("Número de elementos", width / 2 - 50, height - 20);
-                g2.drawString("Número de operaciones", 20, margin - 10);
+                grafica2.drawString("Número de elementos", ancho / 2 - 50, alto - 20);
+                grafica2.drawString("Número de operaciones", 20, 80 - 10);
             }
         };
 

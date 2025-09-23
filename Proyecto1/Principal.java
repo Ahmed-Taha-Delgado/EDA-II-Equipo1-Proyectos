@@ -18,9 +18,9 @@ public class Principal {
      */
     public static void main(String[] args) {
         
-        int[] elementos = {50, 100, 500, 800, 1000, 2000, 5000, 10000};
+        int[] elementos = {500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 9000, 9500, 10000};
         ArrayList<int[]> miListaDeOperaciones = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i=0; i<20; i++) {
             miListaDeOperaciones.add(new int[13]);
         }
         Queue<int[]> miCola = new LinkedList<>();
@@ -29,7 +29,7 @@ public class Principal {
 
         System.out.println("Se llenara 8 veces una lista usando tamaños predefinidos de numeros aleatorios");
         
-        for (int j = 0; j < 8; j++) {
+        for (int j=0; j<20; j++) {
             
             int numero = elementos[j];
 
@@ -74,7 +74,7 @@ public class Principal {
         }
         
         System.out.println("Lista de operaciones");
-        for (int j = 0; j < 8; j++) {
+        for (int j=0; j<20; j++) {
             System.out.println("Tamaño " + elementos[j] + ": " + Arrays.toString(miListaDeOperaciones.get(j)));
         }
 
