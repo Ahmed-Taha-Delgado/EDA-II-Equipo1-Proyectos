@@ -27,7 +27,7 @@ public class Principal {
         Queue<int[]> miCola2 = new LinkedList<>();
         Queue<int[]> miCola3 = new LinkedList<>();
 
-        System.out.println("Se llenara 8 veces una lista usando tamaños predefinidos de numeros aleatorios");
+        System.out.println("Se ordenarán arreglos desde 500 hasta 10,000 elementos con 13 algoritmos");
         
         for (int j=0; j<20; j++) {
             
@@ -55,7 +55,7 @@ public class Principal {
                 Ordenamientos.heapSort(miListaDeArreglos.get(4), operaciones);
                 Ordenamientos.quickSort(miListaDeArreglos.get(5), 0, numero - 1, operaciones);
                 Ordenamientos.mergeSort(miListaDeArreglos.get(6), 0, numero - 1, operaciones);
-                Ordenamientos.patienceSort(miListaDeArreglos.get(7), operaciones);
+                Ordenamientos.timSort(miListaDeArreglos.get(7), operaciones);
                 Ordenamientos.countingSort(miListaDeArreglos.get(8), operaciones);
                 Ordenamientos.radixSort(miListaDeArreglos.get(9), operaciones);
                 Ordenamientos.polifase(miCola, numero / 25, operaciones);

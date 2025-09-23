@@ -272,86 +272,26 @@ public class Ordenamientos {
     }
 
     /**
-     * Ordena un arreglo utilizando Patience Sort.
+     * Ordena un arreglo usando TimSort (mezcla de Insertion Sort + Merge Sort)
      * @param arreglo El arreglo de enteros a ordenar
      * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
      */
-    public static void patienceSort(int[] arreglo, int[] operaciones) {
-        List<Stack<Integer>> pilas = new ArrayList<>();
+    public static void timSort(int[] arreglo, int[] operaciones) {
+        int n = arreglo.length;
 
-        for (int num : arreglo) {
-            operaciones[7]++;
-            int indice = findPile(pilas, num, operaciones);
-            if (indice == pilas.size()) {
-                Stack<Integer> pilaNueva = new Stack<>();
-                pilaNueva.push(num);
-                pilas.add(pilaNueva);
-                operaciones[7]++;
-            } else {
-                pilas.get(indice).push(num);
-                operaciones[7]++;
+        for (int i=0;i<n;i+=32) {
+            MetodosExternos.insertionSort(arreglo, i, Math.min((i + 31),(n-1)), operaciones);
+        }
+
+        for (int size = 32; size<n; size = 2*size) {
+            for (int left = 0; left<n; left += 2*size) {
+                int mid=left+size-1;
+                int right = Math.min((left+2*size-1),(n-1));
+
+                if (mid < right) {
+                    MetodosExternos.mergeT(arreglo, left, mid, right, operaciones);
+                }
             }
-        }
-
-        List<PileCard> heap = new ArrayList<>();
-        for (Stack<Integer> pila : pilas) {
-            heap.add(new PileCard(pila.pop(), pila));
-            operaciones[7]++;
-        }
-
-        MetodosExternos.buildHeap(heap, operaciones);
-
-        int i = 0;
-        while (!heap.isEmpty()) {
-            PileCard min = MetodosExternos.extractMin(heap, operaciones);
-            arreglo[i++] = min.valor;
-            operaciones[7]++;
-            if (!min.pila.isEmpty()) {
-                MetodosExternos.insertHeap(heap, new PileCard(min.pila.pop(), min.pila), operaciones);
-                operaciones[7]++;
-            }
-        }
-    }
-
-    /**
-     * Encuentra la pila correcta para colocar un número en Patience Sort
-     * @param pilas La lista de pilas
-     * @param key El número a colocar
-     * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
-     * @return El índice de la pila donde se debe colocar el número
-     */
-    private static int findPile(List<Stack<Integer>> pilas, int key, int[] operaciones) {
-        int left = 0, right = pilas.size() - 1;
-        while (left <= right) {
-            int mid = (left + right) / 2;
-            operaciones[7]++;
-            if (pilas.get(mid).peek() >= key) {
-                right = mid - 1;
-                operaciones[7]++;
-            } else {
-                left = mid + 1;
-                operaciones[7]++;
-            }
-        }
-        return left;
-    }
-
-    /**
-     * Clase auxiliar para representar una carta dentro de una pila en
-     * la implementación de Patience Sort.
-     */
-    public static class PileCard {
-        int valor;
-        Stack<Integer> pila;
-
-        /**
-        * Constructor de un objeto PileCard
-        * @param valor Valor entero de la carta
-        * @param pila Referencia a la pila de la que proviene la carta
-        */
-        public PileCard(int valor, Stack<Integer> pila) {
-            this.valor = valor;
-            this.pila = pila;
         }
     }
     

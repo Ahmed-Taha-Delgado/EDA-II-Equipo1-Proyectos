@@ -70,93 +70,78 @@ public class MetodosExternos {
     }
 
     /**
-     * Construye un min-heap a partir de una lista de elementos
-     * @param heap Lista de elementos de tipo PileCard
+     * Ordena un subarreglo usando Insertion Sort.
+     * @param arr El arreglo a ordenar
+     * @param left Índice de inicio
+     * @param right Índice final
      * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
      */
-    public static void buildHeap(List<Ordenamientos.PileCard> heap, int[] operaciones) {
-        for (int i = heap.size() / 2 - 1; i >= 0; i--) {
-            heapifyDown(heap, i, operaciones);
-        }
-    }
-
-    /**
-     * Extrae el elemento mínimo del heap (la raíz)
-     * @param heap Lista que representa el min-heap
-     * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
-     * @return El PileCard con el valor mínimo
-     */
-    public static Ordenamientos.PileCard extractMin(List<Ordenamientos.PileCard> heap, int[] operaciones) {
-        Ordenamientos.PileCard min = heap.get(0);
-        Ordenamientos.PileCard last = heap.remove(heap.size() - 1);
-        if (!heap.isEmpty()) {
-            heap.set(0, last);
-            heapifyDown(heap, 0, operaciones);
-        }
-        return min;
-    }
-
-    /**
-     * Inserta un nuevo elemento en el heap y lo reordena para mantener la propiedad de min-heap
-     * @param heap Lista que representa el min-heap
-     * @param card El elemento PileCard a insertar
-     * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
-     */
-    public static void insertHeap(List<Ordenamientos.PileCard> heap, Ordenamientos.PileCard card, int[] operaciones) {
-        heap.add(card);
-        heapifyUp(heap, heap.size() - 1, operaciones);
-    }
-
-    /**
-     * Reordena el heap hacia arriba después de insertar un elemento
-     * @param heap Lista que representa el min-heap
-     * @param i Índice del elemento que se está ajustando
-     * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
-     */
-    private static void heapifyUp(List<Ordenamientos.PileCard> heap, int i, int[] operaciones) {
-        while (i > 0) {
-            int parent = (i - 1) / 2;
+    public static void insertionSort(int[] arr, int left, int right, int[] operaciones) {
+        for (int i = left + 1; i <= right; i++) {
+            int temp = arr[i];
+            int j = i - 1;
             operaciones[7]++;
-            if (heap.get(i).valor < heap.get(parent).valor) {
-                Ordenamientos.PileCard tmp = heap.get(i);
-                heap.set(i, heap.get(parent));
-                heap.set(parent, tmp);
-                i = parent;
-            } else {
-                break;
+            while (j >= left && arr[j] > temp) {
+                arr[j + 1] = arr[j];
+                j--;
+                operaciones[7]++;
             }
+            arr[j + 1] = temp;
+            operaciones[7]++;
         }
     }
 
     /**
-     * Reordena el heap hacia abajo después de extraer el mínimo
-     * @param heap Lista que representa el min-heap
-     * @param i Índice del elemento que se está ajustando
+     * Fusiona dos subarreglos ordenados en uno solo
+     * @param arreglo El arreglo original
+     * @param izq Índice inicial del primer subarreglo
+     * @param mid Fin del primer subarreglo
+     * @param der Fin del segundo subarreglo
      * @param operaciones Un arreglo auxiliar que utilizaremos para llevar el conteo de operaciones
      */
-    private static void heapifyDown(List<Ordenamientos.PileCard> heap, int i, int[] operaciones) {
-        int size = heap.size();
-        while (true) {
-            int left = 2 * i + 1;
-            int right = 2 * i + 2;
-            int smallest = i;
+    public static void mergeT(int[] arreglo, int izq, int mid, int der, int[] operaciones) {
+        int n1 = mid - izq + 1;
+        int n2 = der - mid;
 
-            if (left < size && heap.get(left).valor < heap.get(smallest).valor) {
-                smallest = left;
+        int L[] = new int[n1];
+        int R[] = new int[n2];
+
+        for(int i=0; i<n1; ++i){
+            L[i] = arreglo[izq + i];
+            operaciones[7]++;
+        }
+        for (int j=0; j<n2; ++j){
+            R[j] = arreglo[mid + 1 + j];
+            operaciones[7]++;
+        }
+
+        int i = 0, j = 0;
+        int k = izq;
+        while(i<n1 && j<n2){
+            if (L[i] <= R[j]) {
+                arreglo[k] = L[i];
+                i++;
                 operaciones[7]++;
-            }
-            if (right < size && heap.get(right).valor < heap.get(smallest).valor) {
-                smallest = right;
-                operaciones[7]++;
-            }
-            if (smallest != i) {
-                Ordenamientos.PileCard tmp = heap.get(i);
-                heap.set(i, heap.get(smallest));
-                heap.set(smallest, tmp);
-                i = smallest;
             } else {
-                break;
+                arreglo[k] = R[j];
+                j++;
+                operaciones[7]++;
             }
+            k++;
+        }
+
+        while(i<n1){
+            operaciones[7]++;
+            arreglo[k] = L[i];
+            i++;
+            k++;
+        }
+
+        while(j<n2){
+            operaciones[7]++;
+            arreglo[k] = R[j];
+            j++;
+            k++;
         }
     }
 }

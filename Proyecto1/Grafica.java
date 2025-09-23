@@ -72,7 +72,7 @@ public class Grafica extends JFrame {
                 nombres.set(0, "QuickSort");
                 nombres.set(1, "HeapSort");
                 nombres.set(2, "MergeSort");
-                nombres.set(3, "PatienceSort");
+                nombres.set(3, "TimSort");
                 for(int j=0; j<4; j++){    
                     for(int i=0; i<20; i++){
                         valores.get(j)[i] = operaciones.get(i)[j+4];
@@ -154,83 +154,95 @@ public class Grafica extends JFrame {
      * @param valores Los datos de operaciones para el eje Y
      * @param tamaño El número de algoritmos a graficar en esta ventana
      */
+
+    //Comentamos esecificamente esta clase, porque hacer graficas en java era algo relativamente nuevo, sabiamos hacer interfaz grafica pero no como hacer graficas
     public static void Graf(int[] elementos, ArrayList<String> nombres, ArrayList<int[]> valores, int tamaño){
-        JFrame ventana = new JFrame("Comparacion de Algoritmos");
+        
+        //Declaramos la ventana emergente, su titulo, tamaño, la forma en la que se cerrara y su posicion
+        JFrame ventana = new JFrame("Comparación de Algoritmos");
         ventana.setSize(1000, 700);
         ventana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ventana.setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel() {
+        //Hacemos un objeto de tipo "JPanel", permite crear botones, etiquetas, texto, etc. (Interfaz Grafica)
+        JPanel panel = new JPanel(){
+            //Sobrescribir los metodos de paintComponent para dibujar en el panel
             @Override
             protected void paintComponent(Graphics grafica){
+                
+                //Se castea el objeto grafica a tipo "Graphics2D", permite utilizar metodos que no estan en Graphics
+                //Usamos esa version para hacer un antialiasing
                 super.paintComponent(grafica);
                 Graphics2D grafica2 = (Graphics2D) grafica;
+                //Se definen las lineas de tamaño 2 pixeles
+                //El antialiasing suaviza los pixeles de las lineas (se ve mas bonito)
                 grafica2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                grafica2.setStroke(new BasicStroke(2)); // solo línea sólida
+                grafica2.setStroke(new BasicStroke(2));
 
+                //Usamos variables para el tamaño de la ventana por si se quiere redefinir el tamaño dentro de la ejecucion
                 int ancho = getWidth();
                 int alto = getHeight();
 
-                // Generar Colores distintos para cada algoritmo
+                //Declaramos los colores que queremos para las lineas con la clase Color
                 Color[] Colores = {
-                    new Color(112,214,255), 
-                    new Color(255,112,166), 
-                    new Color(255,151,112), 
-                    new Color(255,214,112)
+                    new Color(52, 152, 219),
+                    new Color(231, 76, 60),
+                    new Color(46, 204, 113),
+                    new Color(155, 89, 182)
                 };
 
-                // Calcular valor máximo
+                //Calculamos el valor maximo de los arreglos ingresados para saber el valor maximo de cada grafica
                 int max = 0;
-                for (int[] valor : valores) {
-                    for (int val : valor) 
+                for(int[] valor : valores){
+                    for(int val : valor){ 
                         max = Math.max(max, val);
+                    }
                 }
 
-                // Dibujar líneas horizontales de referencia
-                grafica2.setColor(Color.LIGHT_GRAY);
-                for (int i=0; i<=20; i++) {
-                    int y = alto - 80 - i * (alto - 2 * 80) / 20;
+                //Dibujamos las lineas del eje "y" junto con sus valores
+                grafica2.setColor(Color.lightGray);
+                for(int i=0; i<=20; i++){
+                    int y = alto - 80 - i * (alto - 160) / 20;
                     grafica2.drawLine(80, y, ancho - 80, y);
                     grafica2.setColor(Color.black);
                     int valorY = (int) Math.round((double) max * i / 20);
-                    grafica2.drawString(String.valueOf(valorY), 80 - 75, y + 5);
-                    grafica2.setColor(Color.LIGHT_GRAY);
+                    grafica2.drawString(String.valueOf(valorY), 15, y + 5);
+                    grafica2.setColor(Color.lightGray);
                 }
 
-                // Dibujar líneas verticales
-                for (int i = 0; i < elementos.length; i++) {
+                //Dibujamos las lineas del eje "x"
+                for(int i = 0; i < elementos.length; i++){
                     int x = 80 + i * (ancho - 2 * 80) / (elementos.length - 1);
                     grafica2.drawLine(x, alto - 80, x, 80);
                 }
 
-                // Dibujar ejes
+                //Dibujamos los ejes
                 grafica2.setColor(Color.black);
                 grafica2.drawLine(80, alto - 80, ancho - 80, alto - 80);
                 grafica2.drawLine(80, alto - 80, 80, 80);
 
-                // Dibujar leyenda en varias filas si es necesario
-                for (int i = 0; i < tamaño; i++) {
-                    int fila = i / 4;
-                    int columna = i % 4;
+                //Se muestran los nombres de los algoritmos mostrados
+                for(int i = 0; i < tamaño; i++){
+                    int fila = i/4;
                     grafica2.setColor(Colores[i]);
-                    grafica2.fillRect(80 + columna * 200, 20 + fila * 20, 15, 15);
+                    grafica2.fillRect(80 + i * 200, 20 + fila * 20, 15, 15);
                     grafica2.setColor(Color.black);
-                    grafica2.drawString(nombres.get(i), 80 + columna * 200 + 20, 32 + fila * 20);
+                    grafica2.drawString(nombres.get(i), 80 + i * 200 + 20, 32 + fila * 20);
                 }
 
-                // Dibujar líneas de datos con desplazamiento leve
-                for (int k = 0; k < tamaño; k++){
+                //Dibujamos las lineas de los algoritmos con un leve desplazamiento para que no se encimen
+                for(int k = 0; k < tamaño; k++){
                     int[] datos = valores.get(k);
                     grafica2.setColor(Colores[k]);
 
-                    int desplazamiento = k * 3; // pequeño desplazamiento vertical
+                    int desplazamiento = k*3;
                     int X = 80;
-                    int Y = alto - 80 - (int) Math.round((double) datos[0] / max * (alto - 2 * 80)) - desplazamiento;
+                    int Y = alto - 80 - (int) Math.round((double) datos[0] / max * (alto - 160)) - desplazamiento;
                     grafica2.fillOval(X - 3, Y - 3, 6, 6);
 
-                    for (int i = 1; i < elementos.length; i++) {
-                        int x = 80 + i * (ancho - 2 * 80) / (elementos.length - 1);
-                        int y = alto - 80 - (int) Math.round((double) datos[i] / max * (alto - 2 * 80)) - desplazamiento;
+                    for(int i = 1; i < elementos.length; i++){
+                        int x = 80 + i * (ancho - 160) / (elementos.length - 1);
+                        int y = alto - 80 - (int) Math.round((double) datos[i] / max * (alto - 160)) - desplazamiento;
                         grafica2.drawLine(X, Y, x, y);
                         grafica2.fillOval(x - 3, y - 3, 6, 6);
                         X = x;
@@ -238,15 +250,16 @@ public class Grafica extends JFrame {
                     }
                 }
 
-                // Etiquetas del eje X
+                //Valores del eje "x"
                 grafica2.setColor(Color.black);
-                for (int i = 0; i < elementos.length; i++) {
+                for(int i = 0; i < elementos.length; i++){
                     int x = 80 + i * (ancho - 2 * 80) / (elementos.length - 1);
                     grafica2.drawString(String.valueOf(elementos[i]), x - 10, alto - 80 + 25);
                 }
 
+                //Etiquetas de los ejes 
                 grafica2.drawString("Número de elementos", ancho / 2 - 50, alto - 20);
-                grafica2.drawString("Número de operaciones", 20, 80 - 10);
+                grafica2.drawString("Número de operaciones", 8, 65);
             }
         };
 
